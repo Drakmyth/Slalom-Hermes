@@ -12,7 +12,6 @@ import com.hokee.hermes.interfaces.IContactService;
 import com.hokee.hermes.interfaces.IMessageService;
 import com.hokee.hermes.interfaces.ISessionService;
 import com.hokee.hermes.models.Contact;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class SendMessageHandler {
 	private static final Logger log = LoggerFactory.getLogger(SendMessageHandler.class);
@@ -91,11 +90,11 @@ public class SendMessageHandler {
 
 	private SpeechletResponse handlePartialIntent(final Contact recipient) {
 
-		throw new NotImplementedException();
+		return null;
 	}
 
 	private SpeechletResponse handlePartialIntent() {
 
-		throw new NotImplementedException();
+		return null;
 	}
 }
