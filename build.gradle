@@ -21,7 +21,6 @@ dependencies {
 	testCompile 'junit:junit:3.8.1'
 }
 
-// Create a single Jar with all dependencies
 task fatJar(type: Jar) {
 	classifier = "jar-with-dependencies"
 	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
