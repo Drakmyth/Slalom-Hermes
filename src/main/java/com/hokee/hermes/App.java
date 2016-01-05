@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.amazon.speech.speechlet.lambda.SpeechletRequestStreamHandler;
+import com.hokee.hermes.services.ContactService;
+import com.hokee.hermes.services.MessageService;
 
 /**
  * Hello world!
@@ -20,6 +22,6 @@ public class App extends SpeechletRequestStreamHandler {
 	}
 
 	public App() {
-		super(new HermesSpeechlet(), supportedApplicationIds);
+		super(new HermesSpeechlet(new MessageService(), new ContactService()), supportedApplicationIds);
 	}
 }
