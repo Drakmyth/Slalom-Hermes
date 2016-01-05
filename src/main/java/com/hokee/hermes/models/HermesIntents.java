@@ -1,4 +1,4 @@
-package com.hokee.hermes;
+package com.hokee.hermes.models;
 
 public enum HermesIntents {
 	SendMessage

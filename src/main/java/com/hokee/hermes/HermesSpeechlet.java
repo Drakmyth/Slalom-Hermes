@@ -14,19 +14,31 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
+import com.hokee.hermes.interfaces.IContactService;
+import com.hokee.hermes.interfaces.IMessageService;
+import com.hokee.hermes.interfaces.ISessionService;
+import com.hokee.hermes.models.HermesIntents;
+import com.hokee.hermes.services.SessionService;
 
 public class HermesSpeechlet implements Speechlet {
 	private static final Logger log = LoggerFactory.getLogger(HermesSpeechlet.class);
 
-	private static final String MESSAGE = "message";
-	private static final String FRIEND = "friend";
+	private final IMessageService _messageService;
+	private final IContactService _contactService;
+	private ISessionService _sessionService;
+
+	public HermesSpeechlet(final IMessageService messageService, final IContactService contactService) {
+		_messageService = messageService;
+		_contactService = contactService;
+	}
 
 	@Override
 	public void onSessionStarted(final SessionStartedRequest request, final Session session)
 			throws SpeechletException {
 		log.info("onSessionStarted requestId={}, sessionId={}", request.getRequestId(),
 				 session.getSessionId());
-		// any initialization logic goes here
+
+		_sessionService = new SessionService(session);
 	}
 
 	@Override
@@ -47,7 +59,7 @@ public class HermesSpeechlet implements Speechlet {
 		String intentName = (intent != null) ? intent.getName() : null;
 
 		if (HermesIntents.SendMessage.name().equals(intentName)) {
-			return new SendMessageHandler().getSendMessageResponse(intent);
+			return new SendMessageHandler(_messageService, _contactService, _sessionService).getSendMessageResponse(intent);
 		} else if ("AMAZON.Help".equals(intentName)) {
 			return getHelpResponse();
 		} else {
