@@ -1,17 +1,17 @@
-package com.hokee.hermes;
+package com.hokee.hermes.intentHandlers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.speechlet.SpeechletException;
 import com.amazon.speech.speechlet.SpeechletResponse;
-import com.amazon.speech.speechlet.User;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.SimpleCard;
 import com.hokee.hermes.interfaces.IContactService;
 import com.hokee.hermes.interfaces.IMessageService;
-import com.hokee.hermes.interfaces.ISessionService;
+import com.hokee.hermes.interfaces.IUserService;
 import com.hokee.hermes.models.Contact;
+import com.hokee.hermes.models.User;
 
 public class SendMessageHandler {
 	private static final Logger log = LoggerFactory.getLogger(SendMessageHandler.class);
@@ -21,17 +21,17 @@ public class SendMessageHandler {
 
 	private final IMessageService _messageService;
 	private final IContactService _contactService;
-	private final ISessionService _sessionService;
+	private final IUserService _userService;
 
-	public SendMessageHandler(final IMessageService messageService, final IContactService contactService, final ISessionService sessionService) {
+	public SendMessageHandler(final IMessageService messageService, final IContactService contactService, final IUserService userService) {
 		_messageService = messageService;
 		_contactService = contactService;
-		_sessionService = sessionService;
+		_userService = userService;
 	}
 
 	public SpeechletResponse getSendMessageResponse(final Intent intent) throws SpeechletException {
 
-		final User user = _sessionService.getUser();
+		final User user = _userService.getUser();
 		final String recipient = intent.getSlot(RECIPIENT).getValue();
 		final String message = intent.getSlot(MESSAGE).getValue();
 

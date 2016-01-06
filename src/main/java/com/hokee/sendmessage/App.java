@@ -1,15 +1,17 @@
 package com.hokee.sendmessage;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
+import com.hokee.shared.SendMessageInput;
+import com.hokee.shared.SendMessageOutput;
 
-public class App implements RequestStreamHandler {
+public class App {
 
-	@Override
-	public void handleRequest(final InputStream inputStream, final OutputStream outputStream, final Context context) throws IOException {
+	public static SendMessageOutput handleRequest(final SendMessageInput input, final Context context) {
 
+		SendMessageOutput output = new SendMessageOutput();
+		output.message = "Test";
+		output.success = true;
+
+		return output;
 	}
 }

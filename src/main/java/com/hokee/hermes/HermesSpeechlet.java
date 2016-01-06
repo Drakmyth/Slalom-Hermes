@@ -17,7 +17,8 @@ import com.amazon.speech.ui.SimpleCard;
 import com.hokee.hermes.interfaces.IContactService;
 import com.hokee.hermes.interfaces.IMessageService;
 import com.hokee.hermes.interfaces.ISessionService;
-import com.hokee.hermes.models.HermesIntents;
+import com.hokee.hermes.interfaces.IUserService;
+import com.hokee.hermes.intentHandlers.SendMessageHandler;
 import com.hokee.hermes.services.SessionService;
 
 public class HermesSpeechlet implements Speechlet {
@@ -25,11 +26,13 @@ public class HermesSpeechlet implements Speechlet {
 
 	private final IMessageService _messageService;
 	private final IContactService _contactService;
+	private final IUserService _userService;
 	private ISessionService _sessionService;
 
-	public HermesSpeechlet(final IMessageService messageService, final IContactService contactService) {
+	public HermesSpeechlet(final IMessageService messageService, final IContactService contactService, final IUserService userService) {
 		_messageService = messageService;
 		_contactService = contactService;
+		_userService = userService;
 	}
 
 	@Override
@@ -59,7 +62,7 @@ public class HermesSpeechlet implements Speechlet {
 		String intentName = (intent != null) ? intent.getName() : null;
 
 		if (HermesIntents.SendMessage.name().equals(intentName)) {
-			return new SendMessageHandler(_messageService, _contactService, _sessionService).getSendMessageResponse(intent);
+			return new SendMessageHandler(_messageService, _contactService, _userService).getSendMessageResponse(intent);
 		} else if ("AMAZON.Help".equals(intentName)) {
 			return getHelpResponse();
 		} else {

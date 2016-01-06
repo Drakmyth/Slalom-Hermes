@@ -11,6 +11,9 @@ public class ContactService implements IContactService {
 
 	@Override
 	public Contact getContact(final String contactName) {
-		return null;
+		final Contact contact = new Contact();
+		contact.setId("0001");
+
+		return contact;
 	}
 }
