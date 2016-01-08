@@ -38,7 +38,7 @@ public class App {
 				final ObjectMetadata metadata = new ObjectMetadata();
 				metadata.setContentLength(messageBytes.length);
 
-				final String key = input.recipient + "/" + UUID.randomUUID();
+				final String key = input.getRecipient() + "/" + UUID.randomUUID();
 				s3.putObject(BUCKET, key, objStream, metadata);
 
 				logger.debug("Successfully uploaded message `{}`", key);
