@@ -1,5 +1,7 @@
 package com.hokee.hermes.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
@@ -11,6 +13,7 @@ import com.hokee.shared.SendMessageInput;
 import com.hokee.shared.SendMessageOutput;
 
 public class MessageService implements IMessageService {
+	private static final Logger log = LoggerFactory.getLogger(MessageService.class);
 
 	private MessageServiceConfig _config;
 	private RestTemplate _restTemplate;
@@ -22,6 +25,8 @@ public class MessageService implements IMessageService {
 
 	@Override
 	public void sendMessage(final User sender, final Contact recipient, final String message) {
+		log.info("sendMessage called with sender: {}, recipient: {}, and message: {}", sender, recipient, message);
+
 		final SendMessageInput body = new SendMessageInput();
 		body.sender = sender.getId();
 		body.recipient = recipient.getId();
