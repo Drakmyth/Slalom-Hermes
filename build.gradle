@@ -5,7 +5,7 @@ group = 'com.hokee.hermes'
 version = '1.0-SNAPSHOT'
 
 repositories {
-	mavenCentral();
+	jcenter();
 }
 
 dependencies {
@@ -20,6 +20,7 @@ dependencies {
 	compile 'org.apache.directory.studio:org.apache.commons.io:2.4'
 
 	compile 'com.amazonaws:aws-lambda-java-core:1.0.0'
+	compile 'com.amazonaws:aws-java-sdk:1.10.45'
 	compile 'com.amazonaws:aws-java-sdk-dynamodb:1.9.40'
 
     compile 'org.springframework:spring-web:4.2.4.RELEASE'

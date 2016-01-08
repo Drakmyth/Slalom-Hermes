@@ -19,6 +19,7 @@ public class MessageService implements IMessageService {
 	private RestTemplate _restTemplate;
 
 	public MessageService(final MessageServiceConfig config, final RestTemplate restTemplate) {
+
 		_config = config;
 		_restTemplate = restTemplate;
 	}
@@ -27,17 +28,13 @@ public class MessageService implements IMessageService {
 	public void sendMessage(final User sender, final Contact recipient, final String message) {
 		log.info("sendMessage called with sender: {}, recipient: {}, and message: {}", sender, recipient, message);
 
-		final SendMessageInput body = new SendMessageInput();
-		body.sender = sender.getId();
-		body.recipient = recipient.getId();
-		body.message = message;
-
+		final SendMessageInput body = new SendMessageInput(sender.getId(), recipient.getId(), message);
 		HttpEntity<SendMessageInput> request = new HttpEntity<>(body, buildHeaders());
-
-		final SendMessageOutput result =_restTemplate.postForEntity(_config.getSendMessageAPIEndpoint(), request, SendMessageOutput.class).getBody();
+		final SendMessageOutput result = _restTemplate.postForEntity(_config.getSendMessageAPIEndpoint(), request, SendMessageOutput.class).getBody();
 	}
 
 	private HttpHeaders buildHeaders() {
+
 		return new HttpHeaders();
 	}
 }
