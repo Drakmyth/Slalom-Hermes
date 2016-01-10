@@ -31,11 +31,14 @@ public class SendMessageHandler {
 
 	public SpeechletResponse getSendMessageResponse(final Intent intent) throws SpeechletException {
 
+		log.info("getSendMessageResponse with intent: {}", intent);
+
 		final User user = _userService.getUser();
 		final String recipient = intent.getSlot(RECIPIENT).getValue();
 		final String message = intent.getSlot(MESSAGE).getValue();
 
 		if (recipient != null && message != null) {
+			log.info("full intent found");
 
 			if (!_contactService.doesContactExist(recipient)) {
 				return handleContactNotFound(recipient);
@@ -45,8 +48,11 @@ public class SendMessageHandler {
 
 			return handleFullIntent(user, contact, message);
 		} else if (recipient == null && message == null) {
+			log.info("partial intent found: missing recipient and message");
+
 			return handlePartialIntent();
 		} else if (recipient != null && message == null) {
+			log.info("partial intent found: missing recipient");
 
 			if (!_contactService.doesContactExist(recipient)) {
 				return handleContactNotFound(recipient);
