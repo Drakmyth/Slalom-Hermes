@@ -1,5 +1,7 @@
 package com.hokee.hermes.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -28,8 +30,9 @@ public class MessageService implements IMessageService {
 	public SendMessageResult sendMessage(final User sender, final Contact recipient, final String message) {
 		log.info("sendMessage sender={}, recipient={}, message={}", sender.getName(), recipient.getName(), message);
 
+		// TODO: need to secure API endpoints and use headers for Auth
 		final Message body = new Message(sender.getId(), recipient.getId(), message);
-		HttpEntity<Message> request = new HttpEntity<>(body, buildHeaders());
+		HttpEntity<Message> request = new HttpEntity<>(body, new HttpHeaders());
 		final SendMessageResult result = _restTemplate.postForEntity(_config.getSendMessageAPIEndpoint(), request, SendMessageResult.class).getBody();
 
 		log.info("message sent status: {} - {}", result.isSuccess(), result.getMessage());
@@ -37,8 +40,14 @@ public class MessageService implements IMessageService {
 		return result;
 	}
 
-	private HttpHeaders buildHeaders() {
+	@Override
+	public Iterable<Message> getMessages(final User user) {
 
-		return new HttpHeaders();
+		// TODO: refactor to use rest template
+		final ArrayList<Message> messages = new ArrayList<>();
+		messages.add(new Message("0001", "0000", "message 1"));
+		messages.add(new Message("0003", "0000", "message 2"));
+
+		return messages;
 	}
 }
