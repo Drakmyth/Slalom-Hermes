@@ -10,17 +10,18 @@ public class ContactService implements IContactService {
 
 	@Override
 	public boolean doesContactExist(final String contactName) {
-		log.info("doesContactExist called with contactName: {}", contactName);
+		log.info("doesContactExist contactName={}", contactName);
 
 		return true;
 	}
 
 	@Override
 	public Contact getContact(final String contactName) {
-		log.info("getContact called with {}", contactName);
+		log.info("getContact contactName={}", contactName);
 
 		final Contact contact = new Contact();
 		contact.setId("0001");
+		contact.setName(contactName);
 
 		return contact;
 	}

@@ -39,7 +39,7 @@ public class HermesSpeechlet implements Speechlet {
 	public void onSessionStarted(final SessionStartedRequest request, final Session session)
 			throws SpeechletException {
 		log.info("onSessionStarted requestId={}, sessionId={}", request.getRequestId(),
-				 session.getSessionId());
+				  session.getSessionId());
 
 		_sessionService = new SessionService(session);
 	}
@@ -48,7 +48,7 @@ public class HermesSpeechlet implements Speechlet {
 	public SpeechletResponse onLaunch(final LaunchRequest request, final Session session)
 			throws SpeechletException {
 		log.info("onLaunch requestId={}, sessionId={}", request.getRequestId(),
-				 session.getSessionId());
+				  session.getSessionId());
 		return getWelcomeResponse();
 	}
 
@@ -56,13 +56,13 @@ public class HermesSpeechlet implements Speechlet {
 	public SpeechletResponse onIntent(final IntentRequest request, final Session session)
 			throws SpeechletException {
 		log.info("onIntent requestId={}, sessionId={}", request.getRequestId(),
-				 session.getSessionId());
+				  session.getSessionId());
 
 		Intent intent = request.getIntent();
 		String intentName = (intent != null) ? intent.getName() : null;
 
 		if (HermesIntents.SendMessage.name().equals(intentName)) {
-			return new SendMessageHandler(_messageService, _contactService, _userService).getSendMessageResponse(intent);
+			return new SendMessageHandler(_messageService, _contactService, _userService, _sessionService).getSendMessageResponse(intent);
 		} else if ("AMAZON.Help".equals(intentName)) {
 			return getHelpResponse();
 		} else {
@@ -74,7 +74,7 @@ public class HermesSpeechlet implements Speechlet {
 	public void onSessionEnded(final SessionEndedRequest request, final Session session)
 			throws SpeechletException {
 		log.info("onSessionEnded requestId={}, sessionId={}", request.getRequestId(),
-				 session.getSessionId());
+				  session.getSessionId());
 		// any cleanup logic goes here
 	}
 

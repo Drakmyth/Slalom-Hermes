@@ -1,39 +1,47 @@
 package com.hokee.shared;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class SendMessageInput {
 
-	private final String _sender;
-	private final String _recipient;
-	private final String _message;
+	private String _sender;
+	private String _recipient;
+	private String _message;
 
-	@JsonCreator
-	public SendMessageInput(@JsonProperty("sender") final String sender,
-	                        @JsonProperty("recipient") final String recipient,
-	                        @JsonProperty("message") final String message) {
+	public SendMessageInput() {
+	}
+
+	public SendMessageInput(final String sender,
+	                        final String recipient,
+	                        final String message) {
 
 		_sender = sender;
 		_recipient = recipient;
 		_message = message;
 	}
 
-	@JsonProperty("sender")
 	public String getSender() {
 
 		return _sender;
 	}
 
-	@JsonProperty("recipient")
 	public String getRecipient() {
 
 		return _recipient;
 	}
 
-	@JsonProperty("message")
 	public String getMessage() {
 
 		return _message;
+	}
+
+	public void setSender(final String _sender) {
+		this._sender = _sender;
+	}
+
+	public void setRecipient(final String _recipient) {
+		this._recipient = _recipient;
+	}
+
+	public void setMessage(final String _message) {
+		this._message = _message;
 	}
 }
