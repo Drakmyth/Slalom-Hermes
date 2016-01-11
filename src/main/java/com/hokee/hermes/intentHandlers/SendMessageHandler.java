@@ -54,13 +54,17 @@ public class SendMessageHandler {
 			log.info("partial intent found - recipient={}", recipientSlot.getValue());
 
 			return handleRecipientDialogRequest(intent);
-		} else if (messageSlot != null && messageSlot.getValue() != null) {
+		}
+		/*	removed support for partial with message only and no recipient or message
+
+		else if (messageSlot != null && messageSlot.getValue() != null) {
 			log.info("partial intent found - message present");
 
 			return handleMessageDialogRequest(intent);
 		} else {
 			//return handleNoSlotDialogRequest(intent, session);
 		}
+		*/
 
 		throw new SpeechletException("Invalid Intent");
 	}
