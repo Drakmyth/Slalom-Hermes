@@ -1,17 +1,17 @@
 package com.hokee.shared;
 
-public class SendMessageInput {
+public class Message {
 
 	private String _sender;
 	private String _recipient;
 	private String _message;
 
-	public SendMessageInput() {
+	public Message() {
 	}
 
-	public SendMessageInput(final String sender,
-	                        final String recipient,
-	                        final String message) {
+	public Message(final String sender,
+				   final String recipient,
+				   final String message) {
 
 		_sender = sender;
 		_recipient = recipient;

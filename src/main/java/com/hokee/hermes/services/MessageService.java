@@ -7,10 +7,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
 import com.hokee.hermes.config.MessageServiceConfig;
 import com.hokee.hermes.interfaces.IMessageService;
-import com.hokee.hermes.models.Contact;
-import com.hokee.hermes.models.User;
-import com.hokee.shared.SendMessageInput;
-import com.hokee.shared.SendMessageOutput;
+import com.hokee.shared.Contact;
+import com.hokee.shared.Message;
+import com.hokee.shared.SendMessageResult;
+import com.hokee.shared.User;
 
 public class MessageService implements IMessageService {
 	private static final Logger log = LoggerFactory.getLogger(MessageService.class);
@@ -25,12 +25,12 @@ public class MessageService implements IMessageService {
 	}
 
 	@Override
-	public SendMessageOutput sendMessage(final User sender, final Contact recipient, final String message) {
+	public SendMessageResult sendMessage(final User sender, final Contact recipient, final String message) {
 		log.info("sendMessage sender={}, recipient={}, message={}", sender.getName(), recipient.getName(), message);
 
-		final SendMessageInput body = new SendMessageInput(sender.getId(), recipient.getId(), message);
-		HttpEntity<SendMessageInput> request = new HttpEntity<>(body, buildHeaders());
-		final SendMessageOutput result = _restTemplate.postForEntity(_config.getSendMessageAPIEndpoint(), request, SendMessageOutput.class).getBody();
+		final Message body = new Message(sender.getId(), recipient.getId(), message);
+		HttpEntity<Message> request = new HttpEntity<>(body, buildHeaders());
+		final SendMessageResult result = _restTemplate.postForEntity(_config.getSendMessageAPIEndpoint(), request, SendMessageResult.class).getBody();
 
 		log.info("message sent status: {} - {}", result.isSuccess(), result.getMessage());
 

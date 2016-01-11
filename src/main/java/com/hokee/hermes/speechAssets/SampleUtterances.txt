@@ -5,8 +5,6 @@ SendMessage send {friend} a message
 SendMessage send {friend} a message
 SendMessage send {friend} a message
 
-SendMessage send {hello|message}
-
 SendMessage send {friend} a message that says {hello|message}
 SendMessage send {friend} a message that says {hey there|message}
 SendMessage send {friend} a message that says {how are you|message}
@@ -37,3 +35,6 @@ SendMessage send {friend} the following message that says {how are you|message}
 SendMessage send {friend} the following message that says {how are you today|message}
 SendMessage send {friend} the following message that says {want to catch up later|message}
 SendMessage send {friend} the following message that says {it's been good talking with you|message}
+
+CheckMessage do I have any messages
+CheckMessage to check for messages

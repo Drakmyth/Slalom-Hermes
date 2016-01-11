@@ -1,0 +1,23 @@
+{
+  "intents": [
+    {
+      "intent": "SendMessage",
+      "slots": [
+        {
+          "name": "message",
+          "type": "AMAZON.LITERAL"
+        },
+        {
+          "name": "friend",
+          "type": "AMAZON.US_FIRST_NAME"
+        }
+      ]
+    },
+    {
+      "intent": "CheckMessage"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    }
+  ]
+}

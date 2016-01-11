@@ -1,4 +1,4 @@
-package com.hokee.hermes.models;
+package com.hokee.shared;
 
 public class Contact extends User {
 

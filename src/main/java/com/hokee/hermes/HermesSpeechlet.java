@@ -14,11 +14,11 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
+import com.hokee.hermes.intentHandlers.SendMessageHandler;
 import com.hokee.hermes.interfaces.IContactService;
 import com.hokee.hermes.interfaces.IMessageService;
 import com.hokee.hermes.interfaces.ISessionService;
 import com.hokee.hermes.interfaces.IUserService;
-import com.hokee.hermes.intentHandlers.SendMessageHandler;
 import com.hokee.hermes.services.SessionService;
 
 public class HermesSpeechlet implements Speechlet {
@@ -62,7 +62,7 @@ public class HermesSpeechlet implements Speechlet {
 		String intentName = (intent != null) ? intent.getName() : null;
 
 		if (HermesIntents.SendMessage.name().equals(intentName)) {
-			return new SendMessageHandler(_messageService, _contactService, _userService, _sessionService).getSendMessageResponse(intent);
+			return new SendMessageHandler(_messageService, _contactService, _userService, _sessionService).handleIntent(intent);
 		} else if ("AMAZON.Help".equals(intentName)) {
 			return getHelpResponse();
 		} else {

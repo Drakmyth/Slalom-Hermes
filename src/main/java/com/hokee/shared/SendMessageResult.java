@@ -1,27 +1,27 @@
 package com.hokee.shared;
 
-public class SendMessageOutput {
+public class SendMessageResult {
 
 	private boolean _success;
 	private String _message;
 
-	public SendMessageOutput() {
+	public SendMessageResult() {
 	}
 
-	private SendMessageOutput(final boolean success, final String message) {
+	private SendMessageResult(final boolean success, final String message) {
 
 		_success = success;
 		_message = message;
 	}
 
-	public static SendMessageOutput Success() {
+	public static SendMessageResult Success() {
 
-		return new SendMessageOutput(true, "Success");
+		return new SendMessageResult(true, "Success");
 	}
 
-	public static SendMessageOutput Failure(final String message) {
+	public static SendMessageResult Failure(final String message) {
 
-		return new SendMessageOutput(false, message);
+		return new SendMessageResult(false, message);
 	}
 
 	public boolean isSuccess() {

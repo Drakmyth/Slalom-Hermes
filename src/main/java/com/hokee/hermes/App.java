@@ -2,7 +2,6 @@ package com.hokee.hermes;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import org.springframework.web.client.RestTemplate;
 import com.amazon.speech.speechlet.lambda.SpeechletRequestStreamHandler;
 import com.hokee.hermes.config.MessageServiceConfig;

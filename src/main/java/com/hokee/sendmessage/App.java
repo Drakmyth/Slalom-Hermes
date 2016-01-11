@@ -1,5 +1,11 @@
 package com.hokee.sendmessage;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.UUID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -8,15 +14,8 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hokee.shared.SendMessageInput;
-import com.hokee.shared.SendMessageOutput;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.UUID;
+import com.hokee.shared.Message;
+import com.hokee.shared.SendMessageResult;
 
 public class App {
 
@@ -26,7 +25,7 @@ public class App {
 	private static final String ACCESS_KEY = "AKIAJUAIJL5GS25C54MA";
 	private static final String SECRET_KEY = "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";
 
-	public static SendMessageOutput handleRequest(final SendMessageInput input, final Context context) {
+	public static SendMessageResult handleRequest(final Message input, final Context context) {
 
 		final AWSCredentials awsCredentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
 
@@ -44,13 +43,13 @@ public class App {
 				logger.debug("Successfully uploaded message `{}`", key);
 			} catch (IOException e) {
 				logger.error("Error sending message", e);
-				return SendMessageOutput.Failure(e.getMessage());
+				return SendMessageResult.Failure(e.getMessage());
 			}
 
-			return SendMessageOutput.Success();
+			return SendMessageResult.Success();
 		} catch (JsonProcessingException | AmazonClientException e) {
 			logger.error("Error sending message", e);
-			return SendMessageOutput.Failure(e.getMessage());
+			return SendMessageResult.Failure(e.getMessage());
 		}
 	}
 }

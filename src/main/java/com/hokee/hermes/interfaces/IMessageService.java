@@ -1,9 +1,11 @@
 package com.hokee.hermes.interfaces;
 
-import com.hokee.hermes.models.Contact;
-import com.hokee.hermes.models.User;
-import com.hokee.shared.SendMessageOutput;
+import com.hokee.shared.Contact;
+import com.hokee.shared.GetMessageOutput;
+import com.hokee.shared.SendMessageResult;
+import com.hokee.shared.User;
 
 public interface IMessageService {
-	SendMessageOutput sendMessage(final User sender, final Contact recipient, String message);
+	SendMessageResult sendMessage(final User sender, final Contact recipient, String message);
+	GetMessageOutput getMessage(final User user);
 }

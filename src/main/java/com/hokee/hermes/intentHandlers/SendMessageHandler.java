@@ -10,14 +10,15 @@ import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 import com.hokee.hermes.interfaces.IContactService;
+import com.hokee.hermes.interfaces.IIntentHandler;
 import com.hokee.hermes.interfaces.IMessageService;
 import com.hokee.hermes.interfaces.ISessionService;
 import com.hokee.hermes.interfaces.IUserService;
-import com.hokee.hermes.models.Contact;
-import com.hokee.hermes.models.User;
-import com.hokee.shared.SendMessageOutput;
+import com.hokee.shared.Contact;
+import com.hokee.shared.SendMessageResult;
+import com.hokee.shared.User;
 
-public class SendMessageHandler {
+public class SendMessageHandler implements IIntentHandler {
 	private static final Logger log = LoggerFactory.getLogger(SendMessageHandler.class);
 
 	private static final String MESSAGE = "message";
@@ -35,9 +36,10 @@ public class SendMessageHandler {
 		_sessionService = sessionService;
 	}
 
-	public SpeechletResponse getSendMessageResponse(final Intent intent) throws SpeechletException {
+	@Override
+	public SpeechletResponse handleIntent(final Intent intent) throws SpeechletException {
 
-		log.info("getSendMessageResponse intent={}", intent);
+		log.info("handleIntent intent={}", intent);
 
 		Slot recipientSlot = intent.getSlot(RECIPIENT);
 		Slot messageSlot = intent.getSlot(MESSAGE);
@@ -134,7 +136,7 @@ public class SendMessageHandler {
 
 		final User user = _userService.getUser();
 
-		final SendMessageOutput result =_messageService.sendMessage(user, recipient, message);
+		final SendMessageResult result =_messageService.sendMessage(user, recipient, message);
 
 		final SimpleCard card = new SimpleCard();
 		final PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
