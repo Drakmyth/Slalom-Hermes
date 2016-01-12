@@ -14,7 +14,13 @@
       ]
     },
     {
-      "intent": "CheckMessage"
+      "intent": "CheckMessage",
+      "slots": [
+	    {
+		  "name": "action",
+		  "type": "MESSAGE_ACTIONS"
+	    }
+      ]
     },
     {
       "intent": "AMAZON.HelpIntent"

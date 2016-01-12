@@ -68,6 +68,7 @@ public class SendMessageHandler implements IIntentHandler {
 		}
 		*/
 
+		// TODO clean up, remove exception and respond telling the user there was a problem
 		throw new SpeechletException("Invalid Intent");
 	}
 
