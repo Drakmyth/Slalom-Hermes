@@ -34,6 +34,8 @@ public class CheckMessageHandler implements IIntentHandler {
 
 		log.info("handleIntent intent={}", intent);
 
+		// check that we're in the correct context
+
 		Slot actionSlot = intent.getSlot(ACTION);
 
 		// if an action has been submitted
