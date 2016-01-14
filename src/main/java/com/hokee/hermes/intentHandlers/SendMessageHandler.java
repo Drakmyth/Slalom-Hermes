@@ -7,10 +7,8 @@ import com.amazon.speech.slu.Slot;
 import com.amazon.speech.speechlet.SpeechletException;
 import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
-import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 import com.hokee.hermes.interfaces.IContactService;
-import com.hokee.hermes.interfaces.IIntentHandler;
 import com.hokee.hermes.interfaces.IMessageService;
 import com.hokee.hermes.interfaces.ISessionService;
 import com.hokee.hermes.interfaces.IUserService;
@@ -18,7 +16,7 @@ import com.hokee.shared.Contact;
 import com.hokee.shared.SendMessageResult;
 import com.hokee.shared.User;
 
-public class SendMessageHandler implements IIntentHandler {
+public class SendMessageHandler extends AbstractMessageHandler {
 	private static final Logger log = LoggerFactory.getLogger(SendMessageHandler.class);
 
 	private static final String MESSAGE = "message";
@@ -117,20 +115,6 @@ public class SendMessageHandler implements IIntentHandler {
 		final String repromptText = "What message would you like to send " + recipient.getName();
 
 		return newAskResponse(responseText, repromptText);
-	}
-
-	private SpeechletResponse newAskResponse(final String responseText, final String repromptText) {
-
-		final PlainTextOutputSpeech responseSpeech = new PlainTextOutputSpeech();
-		responseSpeech.setText(responseText);
-
-		final PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
-		repromptSpeech.setText(repromptText);
-
-		final Reprompt reprompt = new Reprompt();
-		reprompt.setOutputSpeech(repromptSpeech);
-
-		return SpeechletResponse.newAskResponse(responseSpeech, reprompt);
 	}
 
 	private SpeechletResponse getFinalSendMessageResponse(final Contact recipient, final String message) {

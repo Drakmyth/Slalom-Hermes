@@ -41,13 +41,20 @@ public class MessageService implements IMessageService {
 	}
 
 	@Override
-	public Iterable<Message> getMessages(final User user) {
+	public List<Message> getMessages(final User user) {
 
-		// TODO: refactor to use rest template
+		// TODO: use rest template
 		final ArrayList<Message> messages = new ArrayList<>();
 		messages.add(new Message("0001", "0000", "message 1"));
 		messages.add(new Message("0003", "0000", "message 2"));
 
 		return messages;
+	}
+
+	@Override
+	public boolean deleteMessage(final String messageId) {
+
+		// TODO: use rest template
+		return true;
 	}
 }

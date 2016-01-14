@@ -10,12 +10,12 @@ public class CheckMessageContext extends AbstractContext{
 
 	private final List<Message> _messages;
 	private CheckMessageContextStage _stage;
-	private Message _lastMessage;
+	private Message _previousMessage;
 	private CheckMessageContextAction _currentAction;
 
 	public CheckMessageContext() {
 		_messages = new ArrayList<>();
-		_lastMessage = null;
+		_previousMessage = null;
 		_currentAction = null;
 		_stage = CheckMessageContextStage.GET_MESSAGES;
 	}
@@ -32,19 +32,19 @@ public class CheckMessageContext extends AbstractContext{
 		return _messages.size();
 	}
 
-	public Message getLastMessage() {
-		return _lastMessage;
+	public Message getPreviousMessage() {
+		return _previousMessage;
 	}
 
-	public void setLastMessage(final Message _lastMessage) {
-		this._lastMessage = _lastMessage;
+	public void setPreviousMessage(final Message lastMessage) {
+		_previousMessage = lastMessage;
 	}
 
 	public CheckMessageContextStage getStage() {
 		return _stage;
 	}
 
-	public void settage(CheckMessageContextStage _stage) {
-		this._stage = _stage;
+	public void setStage(CheckMessageContextStage stage) {
+		_stage = stage;
 	}
 }

@@ -2,6 +2,7 @@ package com.hokee.shared;
 
 public class Message {
 
+	private String _id;
 	private String _sender;
 	private String _recipient;
 	private String _message;
@@ -43,5 +44,13 @@ public class Message {
 
 	public void setMessage(final String _message) {
 		this._message = _message;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public void setId(String id) {
+		_id = id;
 	}
 }
