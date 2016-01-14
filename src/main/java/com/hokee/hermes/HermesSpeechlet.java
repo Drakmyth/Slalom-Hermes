@@ -62,6 +62,7 @@ public class HermesSpeechlet implements Speechlet {
 		Intent intent = request.getIntent();
 		String intentName = (intent != null) ? intent.getName() : null;
 
+		log.info("intent found={}", intentName);
 		if (HermesIntents.SendMessage.name().equals(intentName)) {
 			return new SendMessageHandler(_messageService, _contactService, _userService, _sessionService).handleIntent(intent);
 		} else if (HermesIntents.CheckMessage.name().equals(intentName)) {
@@ -69,7 +70,7 @@ public class HermesSpeechlet implements Speechlet {
 		} else if ("AMAZON.Help".equals(intentName)) {
 			return getHelpResponse();
 		} else {
-			throw new SpeechletException("Invalid Intent");
+			throw new SpeechletException("Invalid Intent Detected");
 		}
 	}
 

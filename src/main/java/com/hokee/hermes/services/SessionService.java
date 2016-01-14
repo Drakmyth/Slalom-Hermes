@@ -3,7 +3,6 @@ package com.hokee.hermes.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.amazon.speech.speechlet.Session;
-import com.hokee.hermes.contexts.AbstractContext;
 import com.hokee.hermes.contexts.CheckMessageContext;
 import com.hokee.hermes.contexts.Context;
 import com.hokee.hermes.interfaces.ISessionService;
@@ -27,7 +26,7 @@ public class SessionService implements ISessionService {
 
 	@Override
 	public Context currentContext() {
-		return null;
+		return (Context) _session.getAttribute(CURRENT_CONTEXT);
 	}
 
 	@Override
@@ -37,6 +36,7 @@ public class SessionService implements ISessionService {
 
 	@Override
 	public <T> T getContext() {
+		log.info("attributes {}", _session.getAttributes());
 		return (T) _session.getAttribute(CONTEXT);
 	}
 
