@@ -13,7 +13,7 @@ import com.hokee.hermes.services.UserService;
  * Hello world!
  *
  */
-public class App extends SpeechletRequestStreamHandler {
+public class Hermes extends SpeechletRequestStreamHandler {
 
 	private static final Set<String> supportedApplicationIds = new HashSet<String>();
 	private static MessageService messageService;
@@ -32,7 +32,7 @@ public class App extends SpeechletRequestStreamHandler {
 		userService = new UserService();
 	}
 
-	public App() {
+	public Hermes() {
 		super(new HermesSpeechlet(messageService, contactService, userService), supportedApplicationIds);
 	}
 }

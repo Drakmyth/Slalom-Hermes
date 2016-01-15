@@ -1,7 +1,7 @@
 package com.hokee.hermes.interfaces;
 
 import com.amazon.speech.speechlet.Session;
-import com.hokee.hermes.contexts.CheckMessageContext;
+import com.hokee.hermes.contexts.CheckMessage.CheckMessageContext;
 import com.hokee.hermes.contexts.Context;
 
 public interface ISessionService {

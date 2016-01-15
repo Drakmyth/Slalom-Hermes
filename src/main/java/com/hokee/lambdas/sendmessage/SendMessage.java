@@ -1,4 +1,4 @@
-package com.hokee.sendmessage;
+package com.hokee.lambdas.sendmessage;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -17,9 +17,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hokee.shared.Message;
 import com.hokee.shared.SendMessageResult;
 
-public class App {
+public class SendMessage {
 
-	private static final Logger logger = LoggerFactory.getLogger(App.class);
+	private static final Logger logger = LoggerFactory.getLogger(SendMessage.class);
 	private static final ObjectMapper mapper = new ObjectMapper();
 	private static final String BUCKET = "hermes-inboxes";
 	private static final String ACCESS_KEY = "AKIAJUAIJL5GS25C54MA";

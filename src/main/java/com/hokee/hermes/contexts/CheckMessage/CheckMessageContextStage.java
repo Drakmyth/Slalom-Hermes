@@ -1,4 +1,4 @@
-package com.hokee.hermes.contexts;
+package com.hokee.hermes.contexts.CheckMessage;
 
 public enum CheckMessageContextStage {
 	GET_MESSAGES,
