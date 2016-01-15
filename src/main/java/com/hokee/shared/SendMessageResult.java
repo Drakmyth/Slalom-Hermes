@@ -5,8 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SendMessageResult {
 
-	private final boolean _success;
-	private final String _message;
+	private boolean _success;
+	private String _message;
+
+	@Deprecated
+	public SendMessageResult() {
+
+		_success = false;
+		_message = null;
+	}
 
 	@JsonCreator
 	private SendMessageResult(@JsonProperty("success") final boolean success,
@@ -32,9 +39,21 @@ public class SendMessageResult {
 		return _success;
 	}
 
+	@Deprecated
+	public void setSuccess(final boolean success) {
+
+		_success = success;
+	}
+
 	@JsonProperty("message")
 	public String getMessage() {
 
 		return _message;
+	}
+
+	@Deprecated
+	public void setMessage(final String message) {
+
+		_message = message;
 	}
 }

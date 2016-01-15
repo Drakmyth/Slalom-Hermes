@@ -5,8 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
 
-	private final String _id;
-	private final String _name;
+	private String _id;
+	private String _name;
+
+	@Deprecated
+	public User() {
+
+		_id = null;
+		_name = null;
+	}
 
 	@JsonCreator
 	public User(@JsonProperty("id") final String id,
@@ -22,9 +29,20 @@ public class User {
 		return _id;
 	}
 
+	@Deprecated
+	public void setId(final String id) {
+
+		_id = id;
+	}
+
 	@JsonProperty("name")
 	public String getName() {
 
 		return _name;
+	}
+
+	public void setName(final String name) {
+
+		_name = name;
 	}
 }
