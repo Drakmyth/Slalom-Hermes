@@ -1,11 +1,5 @@
 package com.hokee.lambdas.sendmessage;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.UUID;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -16,6 +10,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hokee.shared.Message;
 import com.hokee.shared.SendMessageResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class SendMessage {
 
@@ -37,7 +37,7 @@ public class SendMessage {
 				final ObjectMetadata metadata = new ObjectMetadata();
 				metadata.setContentLength(messageBytes.length);
 
-				final String key = input.getRecipient() + "/" + UUID.randomUUID();
+				final String key = input.getRecipient() + "/" + input.getId();
 				s3.putObject(BUCKET, key, objStream, metadata);
 
 				logger.debug("Successfully uploaded message `{}`", key);

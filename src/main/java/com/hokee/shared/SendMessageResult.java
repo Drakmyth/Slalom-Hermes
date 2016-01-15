@@ -1,14 +1,16 @@
 package com.hokee.shared;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class SendMessageResult {
 
-	private boolean _success;
-	private String _message;
+	private final boolean _success;
+	private final String _message;
 
-	public SendMessageResult() {
-	}
-
-	private SendMessageResult(final boolean success, final String message) {
+	@JsonCreator
+	private SendMessageResult(@JsonProperty("success") final boolean success,
+	                          @JsonProperty("message") final String message) {
 
 		_success = success;
 		_message = message;
@@ -24,21 +26,15 @@ public class SendMessageResult {
 		return new SendMessageResult(false, message);
 	}
 
+	@JsonProperty("success")
 	public boolean isSuccess() {
 
 		return _success;
 	}
 
+	@JsonProperty("message")
 	public String getMessage() {
 
 		return _message;
-	}
-
-	public void setSuccess(final boolean _success) {
-		this._success = _success;
-	}
-
-	public void setMessage(final String _message) {
-		this._message = _message;
 	}
 }

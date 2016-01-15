@@ -1,20 +1,23 @@
 package com.hokee.hermes.services;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.client.RestTemplate;
 import com.hokee.hermes.config.MessageServiceConfig;
 import com.hokee.hermes.interfaces.IMessageService;
 import com.hokee.shared.Contact;
 import com.hokee.shared.Message;
 import com.hokee.shared.SendMessageResult;
 import com.hokee.shared.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class MessageService implements IMessageService {
+
 	private static final Logger log = LoggerFactory.getLogger(MessageService.class);
 
 	private MessageServiceConfig _config;
@@ -28,10 +31,11 @@ public class MessageService implements IMessageService {
 
 	@Override
 	public SendMessageResult sendMessage(final User sender, final Contact recipient, final String message) {
+
 		log.info("sendMessage sender={}, recipient={}, message={}", sender.getName(), recipient.getName(), message);
 
 		// TODO: need to secure API endpoints and use headers for Auth
-		final Message body = new Message(sender.getId(), recipient.getId(), message);
+		final Message body = new Message(UUID.randomUUID().toString(), sender.getId(), recipient.getId(), message);
 		HttpEntity<Message> request = new HttpEntity<>(body, new HttpHeaders());
 		final SendMessageResult result = _restTemplate.postForEntity(_config.getSendMessageAPIEndpoint(), request, SendMessageResult.class).getBody();
 
@@ -45,8 +49,8 @@ public class MessageService implements IMessageService {
 
 		// TODO: use rest template
 		final ArrayList<Message> messages = new ArrayList<>();
-		messages.add(new Message("0001", "0000", "message 1"));
-		messages.add(new Message("0003", "0000", "message 2"));
+		messages.add(new Message("000A", "0001", "0000", "message 1"));
+		messages.add(new Message("000B", "0003", "0000", "message 2"));
 
 		return messages;
 	}
