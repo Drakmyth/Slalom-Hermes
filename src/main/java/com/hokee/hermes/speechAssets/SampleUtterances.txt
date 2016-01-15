@@ -39,3 +39,7 @@ SendMessage send {friend} the following message that says {it's been good talkin
 CheckMessage do I have any messages
 CheckMessage to check for messages
 CheckMessage {action}
+
+AddContact add a new contact
+AddContact {pin}
+AddContact {name}

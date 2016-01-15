@@ -14,6 +14,7 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
+import com.hokee.hermes.intentHandlers.AddContactHandler;
 import com.hokee.hermes.intentHandlers.CheckMessageHandler;
 import com.hokee.hermes.intentHandlers.SendMessageHandler;
 import com.hokee.hermes.interfaces.IContactService;
@@ -67,6 +68,8 @@ public class HermesSpeechlet implements Speechlet {
 			return new SendMessageHandler(_messageService, _contactService, _userService, _sessionService).handleIntent(intent);
 		} else if (HermesIntents.CheckMessage.name().equals(intentName)) {
 			return new CheckMessageHandler(_messageService, _contactService, _userService, _sessionService).handleIntent(intent);
+		} else if (HermesIntents.AddContact.name().equals(intentName)) {
+			return new AddContactHandler(_messageService, _contactService, _userService, _sessionService).handleIntent(intent);
 		} else if ("AMAZON.Help".equals(intentName)) {
 			return getHelpResponse();
 		} else {

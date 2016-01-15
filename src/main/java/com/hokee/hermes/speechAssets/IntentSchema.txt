@@ -23,6 +23,19 @@
       ]
     },
     {
+      "intent": "AddContact",
+      "slots": [
+        {
+          "name": "pin",
+          "type": "AMAZON.FOUR_DIGIT_NUMBER"
+        },
+        {
+          "name": "name",
+          "type": "AMAZON.US_FIRST_NAME"
+        }
+      ]
+    },
+    {
       "intent": "AMAZON.HelpIntent"
     }
   ]
