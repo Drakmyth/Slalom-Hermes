@@ -1,17 +1,17 @@
-package com.hokee.hermes.contexts.CheckMessage;
+package com.hokee.hermes.contexts.checkMessage;
 
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.hokee.shared.Message;
 
-// TODO change to a wrapper that the session processor returns
-public class CheckMessageContextProcessor {
+// TODO change to a wrapper that the session service returns
+public class CheckMessageContextWrapper {
 	private static final Logger log = LoggerFactory.getLogger(CheckMessageContext.class);
 
 	private final CheckMessageContext _context;
 
-	public CheckMessageContextProcessor(final CheckMessageContext context) {
+	public CheckMessageContextWrapper(final CheckMessageContext context) {
 		_context = context;
 	}
 

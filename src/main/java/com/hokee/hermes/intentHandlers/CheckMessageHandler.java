@@ -9,10 +9,10 @@ import com.amazon.speech.slu.Slot;
 import com.amazon.speech.speechlet.SpeechletException;
 import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
-import com.hokee.hermes.contexts.CheckMessage.CheckMessageContext;
-import com.hokee.hermes.contexts.CheckMessage.CheckMessageContextAction;
-import com.hokee.hermes.contexts.CheckMessage.CheckMessageContextProcessor;
-import com.hokee.hermes.contexts.CheckMessage.CheckMessageContextStage;
+import com.hokee.hermes.contexts.checkMessage.CheckMessageContext;
+import com.hokee.hermes.contexts.checkMessage.CheckMessageContextAction;
+import com.hokee.hermes.contexts.checkMessage.CheckMessageContextWrapper;
+import com.hokee.hermes.contexts.checkMessage.CheckMessageContextStage;
 import com.hokee.hermes.contexts.Context;
 import com.hokee.hermes.interfaces.IContactService;
 import com.hokee.hermes.interfaces.IMessageService;
@@ -24,7 +24,7 @@ import com.hokee.shared.User;
 public class CheckMessageHandler extends AbstractMessageHandler {
 	private static final Logger log = LoggerFactory.getLogger(CheckMessageHandler.class);
 
-	public static final String ACTION = "action";
+	private static final String ACTION = "action";
 
 	private final IMessageService _messageService;
 	private final IContactService _contactService;
@@ -44,6 +44,8 @@ public class CheckMessageHandler extends AbstractMessageHandler {
 		log.info("handleIntent intent={}", intent);
 
 		final Slot actionSlot = intent.getSlot(ACTION);
+
+		// ensure we don't have an action without a context
 		if (_sessionService.currentContext() == null && actionSlot.getValue() != null) {
 			throw new SpeechletException("Intent started with no context by action word");
 		}
@@ -58,7 +60,7 @@ public class CheckMessageHandler extends AbstractMessageHandler {
 		}
 
 		final CheckMessageContext context = _sessionService.getContext();
-		final CheckMessageContextProcessor contextProcessor = new CheckMessageContextProcessor(context);
+		final CheckMessageContextWrapper contextProcessor = new CheckMessageContextWrapper(context);
 		final User user = _userService.getUser();
 
 		log.info("CheckMessageContext at state={}", context.getStage());

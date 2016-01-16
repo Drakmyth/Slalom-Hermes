@@ -1,4 +1,4 @@
-package com.hokee.hermes.contexts.CheckMessage;
+package com.hokee.hermes.contexts.checkMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,6 @@ import com.hokee.shared.Message;
 public class CheckMessageContext extends AbstractContext {
 	private static final Logger log = LoggerFactory.getLogger(CheckMessageContext.class);
 
-	private static final String context = "CheckMessage";
-
 	private List<Message> _messages;
 	private CheckMessageContextStage _stage;
 	private Message _previousMessage;
@@ -19,7 +17,7 @@ public class CheckMessageContext extends AbstractContext {
 	public CheckMessageContext() {
 		_messages = new ArrayList<>();
 		_previousMessage = null;
-		_stage = CheckMessageContextStage.GET_MESSAGES;
+		_stage = null;
 	}
 
 	public List<Message> getMessages() {
