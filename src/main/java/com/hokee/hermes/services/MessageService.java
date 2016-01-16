@@ -25,12 +25,16 @@ public class MessageService implements IMessageService {
 	}
 
 	@Override
-	public void sendMessage(final User sender, final Contact recipient, final String message) {
-		log.info("sendMessage called with sender: {}, recipient: {}, and message: {}", sender, recipient, message);
+	public SendMessageOutput sendMessage(final User sender, final Contact recipient, final String message) {
+		log.info("sendMessage sender={}, recipient={}, message={}", sender.getName(), recipient.getName(), message);
 
 		final SendMessageInput body = new SendMessageInput(sender.getId(), recipient.getId(), message);
 		HttpEntity<SendMessageInput> request = new HttpEntity<>(body, buildHeaders());
 		final SendMessageOutput result = _restTemplate.postForEntity(_config.getSendMessageAPIEndpoint(), request, SendMessageOutput.class).getBody();
+
+		log.info("message sent status: {} - {}", result.isSuccess(), result.getMessage());
+
+		return result;
 	}
 
 	private HttpHeaders buildHeaders() {

@@ -1,7 +1,7 @@
 package com.hokee.hermes.interfaces;
 
-import com.amazon.speech.speechlet.User;
+import com.amazon.speech.speechlet.Session;
 
 public interface ISessionService {
-	User getUser();
+	Session getSession();
 }

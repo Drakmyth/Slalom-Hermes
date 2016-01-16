@@ -22,9 +22,9 @@ public class App {
 
 	private static final Logger logger = LoggerFactory.getLogger(App.class);
 	private static final ObjectMapper mapper = new ObjectMapper();
-	private static final String BUCKET = "inboxes";
-	private static final String ACCESS_KEY = "<ACCESS_KEY_HERE>";
-	private static final String SECRET_KEY = "<SECRET_KEY_HERE>";
+	private static final String BUCKET = "hermes-inboxes";
+	private static final String ACCESS_KEY = "AKIAJUAIJL5GS25C54MA";
+	private static final String SECRET_KEY = "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";
 
 	public static SendMessageOutput handleRequest(final SendMessageInput input, final Context context) {
 
