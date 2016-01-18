@@ -1,4 +1,4 @@
-package com.hokee.lambdas.getmessages;
+package com.hokee.lambdas.messages;
 
 import java.io.IOException;
 import java.util.ArrayList;

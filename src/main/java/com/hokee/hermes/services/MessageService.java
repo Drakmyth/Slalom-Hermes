@@ -12,7 +12,7 @@ import com.hokee.hermes.config.MessageServiceConfig;
 import com.hokee.hermes.interfaces.IMessageService;
 import com.hokee.shared.Contact;
 import com.hokee.shared.Message;
-import com.hokee.shared.SendMessageResult;
+import com.hokee.shared.AddMessageResult;
 import com.hokee.shared.User;
 
 public class MessageService implements IMessageService {
@@ -29,14 +29,14 @@ public class MessageService implements IMessageService {
 	}
 
 	@Override
-	public SendMessageResult sendMessage(final Contact contact, final String message) {
+	public AddMessageResult sendMessage(final Contact contact, final String message) {
 		log.info("sendMessage sender={}, recipient={}, message={}", contact.getUser().getName(), contact.getContact().getName(), message);
 
 		// TODO: need to secure API endpoints and use headers for Auth
 		final Message body = new Message(UUID.randomUUID().toString(), contact.getUser().getId(), contact.getContact().getId(), message);
 
 		HttpEntity<Message> request = new HttpEntity<>(body, new HttpHeaders());
-		final SendMessageResult result = _restTemplate.postForEntity(_config.getSendMessageAPIEndpoint(), request, SendMessageResult.class).getBody();
+		final AddMessageResult result = _restTemplate.postForEntity(_config.getSendMessageAPIEndpoint(), request, AddMessageResult.class).getBody();
 
 		log.info("message sent status: {} - {}", result.isSuccess(), result.getMessage());
 

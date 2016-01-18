@@ -1,5 +1,10 @@
-package com.hokee.lambdas.sendmessage;
+package com.hokee.lambdas.messages;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -9,23 +14,17 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hokee.shared.Message;
-import com.hokee.shared.SendMessageResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.hokee.shared.AddMessageResult;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+public class AddMessage {
 
-public class SendMessage {
-
-	private static final Logger logger = LoggerFactory.getLogger(SendMessage.class);
+	private static final Logger logger = LoggerFactory.getLogger(AddMessage.class);
 	private static final ObjectMapper mapper = new ObjectMapper();
 	private static final String BUCKET = "hermes-inboxes";
 	private static final String ACCESS_KEY = "AKIAJUAIJL5GS25C54MA";
 	private static final String SECRET_KEY = "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";
 
-	public static SendMessageResult handleRequest(final Message input, final Context context) {
+	public static AddMessageResult handleRequest(final Message input, final Context context) {
 
 		final AWSCredentials awsCredentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
 
@@ -43,13 +42,13 @@ public class SendMessage {
 				logger.debug("Successfully uploaded message `{}`", key);
 			} catch (IOException e) {
 				logger.error("Error sending message", e);
-				return SendMessageResult.Failure(e.getMessage());
+				return AddMessageResult.Failure(e.getMessage());
 			}
 
-			return SendMessageResult.Success();
+			return AddMessageResult.Success();
 		} catch (JsonProcessingException | AmazonClientException e) {
 			logger.error("Error sending message", e);
-			return SendMessageResult.Failure(e.getMessage());
+			return AddMessageResult.Failure(e.getMessage());
 		}
 	}
 }

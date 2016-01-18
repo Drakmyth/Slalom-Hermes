@@ -5,9 +5,9 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit test for simple SendMessage.
+ * Unit test for simple AddMessage.
  */
-public class SendMessageTest
+public class AddMessageTest
     extends TestCase
 {
     /**
@@ -15,7 +15,7 @@ public class SendMessageTest
      *
      * @param testName name of the test case
      */
-    public SendMessageTest(String testName)
+    public AddMessageTest(String testName)
     {
         super( testName );
     }
@@ -25,7 +25,7 @@ public class SendMessageTest
      */
     public static Test suite()
     {
-        return new TestSuite( SendMessageTest.class );
+        return new TestSuite( AddMessageTest.class );
     }
 
     /**

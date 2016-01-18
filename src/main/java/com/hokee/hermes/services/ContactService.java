@@ -30,7 +30,7 @@ public class ContactService implements IContactService {
 
 	@Override
 	public void addContact(final User user, final User contact, final String name) {
-		log.info("doesContactExist user={}, contact={}, name={}", user, contact, name);
+		log.info("addContact user={}, contact={}, name={}", user, contact, name);
 
 	}
 }

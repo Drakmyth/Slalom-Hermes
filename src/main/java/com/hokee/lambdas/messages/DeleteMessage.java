@@ -1,4 +1,4 @@
-package com.hokee.lambdas.deletemessage;
+package com.hokee.lambdas.messages;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

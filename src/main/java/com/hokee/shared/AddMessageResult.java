@@ -3,34 +3,34 @@ package com.hokee.shared;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SendMessageResult {
+public class AddMessageResult {
 
 	private boolean _success;
 	private String _message;
 
 	@Deprecated
-	public SendMessageResult() {
+	public AddMessageResult() {
 
 		_success = false;
 		_message = null;
 	}
 
 	@JsonCreator
-	private SendMessageResult(@JsonProperty("success") final boolean success,
-	                          @JsonProperty("message") final String message) {
+	private AddMessageResult(@JsonProperty("success") final boolean success,
+							 @JsonProperty("message") final String message) {
 
 		_success = success;
 		_message = message;
 	}
 
-	public static SendMessageResult Success() {
+	public static AddMessageResult Success() {
 
-		return new SendMessageResult(true, "Success");
+		return new AddMessageResult(true, "Success");
 	}
 
-	public static SendMessageResult Failure(final String message) {
+	public static AddMessageResult Failure(final String message) {
 
-		return new SendMessageResult(false, message);
+		return new AddMessageResult(false, message);
 	}
 
 	@JsonProperty("success")

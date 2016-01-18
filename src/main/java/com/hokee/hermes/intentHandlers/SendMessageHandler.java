@@ -13,7 +13,7 @@ import com.hokee.hermes.interfaces.IMessageService;
 import com.hokee.hermes.interfaces.ISessionService;
 import com.hokee.hermes.interfaces.IUserService;
 import com.hokee.shared.Contact;
-import com.hokee.shared.SendMessageResult;
+import com.hokee.shared.AddMessageResult;
 import com.hokee.shared.User;
 
 public class SendMessageHandler extends AbstractMessageHandler {
@@ -121,7 +121,7 @@ public class SendMessageHandler extends AbstractMessageHandler {
 
 	private SpeechletResponse getFinalSendMessageResponse(final Contact recipient, final String message) {
 
-		final SendMessageResult result =_messageService.sendMessage(recipient, message);
+		final AddMessageResult result =_messageService.sendMessage(recipient, message);
 
 		final SimpleCard card = new SimpleCard();
 		final PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
