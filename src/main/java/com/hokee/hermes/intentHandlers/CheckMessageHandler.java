@@ -30,12 +30,14 @@ public class CheckMessageHandler extends AbstractMessageHandler {
 	private final IContactService _contactService;
 	private final IUserService _userService;
 	private final ISessionService _sessionService;
+	private final User _user;
 
 	public CheckMessageHandler(final IMessageService messageService, final IContactService contactService, final IUserService userService, final ISessionService sessionService) {
 		_messageService = messageService;
 		_contactService = contactService;
 		_userService = userService;
 		_sessionService = sessionService;
+		_user = _userService.getUser(_sessionService.getSession().getUser().getUserId());
 	}
 
 	@Override
@@ -59,18 +61,17 @@ public class CheckMessageHandler extends AbstractMessageHandler {
 			_sessionService.setCurrentContext(Context.CheckMessages);
 		}
 
-		final CheckMessageContext context = _sessionService.getContext();
-		final CheckMessageContextWrapper contextProcessor = new CheckMessageContextWrapper(context);
-		final User user = _userService.getUser();
+		final CheckMessageContext c = _sessionService.getContext();
+		final CheckMessageContextWrapper context = new CheckMessageContextWrapper(c);
 
 		log.info("CheckMessageContext at state={}", context.getStage());
 		switch (context.getStage()) {
 			case GET_MESSAGES:
 
 				// get the message
-				List<Message> messages = new ArrayList<>(_messageService.getMessages(user));
+				List<Message> messages = new ArrayList<>(_messageService.getMessages(_user));
 
-				log.info("found {} messages for user {}", messages.size(), user.getName());
+				log.info("found {} messages for user {}", messages.size(), _user.getName());
 				if (messages.size() == 0) {
 					final PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
 					speech.setText("You have zero messages");
@@ -79,19 +80,19 @@ public class CheckMessageHandler extends AbstractMessageHandler {
 				}
 
 				log.info("adding messages to context");
-				contextProcessor.addMessages(messages);
+				context.addMessages(messages);
 
 				log.info("setting stage to {}", CheckMessageContextStage.READ_NEXT.name());
-				contextProcessor.setStage(CheckMessageContextStage.READ_NEXT);
+				context.setStage(CheckMessageContextStage.READ_NEXT);
 
 				log.info("getting message to read");
-				final Message message = contextProcessor.getNextMessage();
+				final Message message = context.getNextMessage();
 
 				log.info("setting previous message {}", message);
-				contextProcessor.setPreviousMessage(message);
+				context.setPreviousMessage(message);
 
 				log.info("saving context {}", context);
-				_sessionService.setContext(contextProcessor.getContext());
+				_sessionService.setContext(context.getContext());
 
 				log.info("return newCheckMessageAskResponse");
 				return newCheckMessageAskResponse(
@@ -108,12 +109,12 @@ public class CheckMessageHandler extends AbstractMessageHandler {
 
 				switch (CheckMessageContextAction.valueOf(actionSlot.getValue().toUpperCase())) {
 					case REPEAT:
-						return newCheckMessageAskResponse("", contextProcessor.getPreviousMessage().getMessage());
+						return newCheckMessageAskResponse("", context.getPreviousMessage().getMessage());
 					case DELETE:
-						_messageService.deleteMessage(contextProcessor.getPreviousMessage().getId());
+						_messageService.deleteMessage(_user, context.getPreviousMessage().getId());
 					case SAVE:
 					default:
-						if (contextProcessor.messageCount() == 0) {
+						if (context.messageCount() == 0) {
 							log.info("no new message - end session");
 							final PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
 							speech.setText("You have no more messages");
@@ -121,9 +122,9 @@ public class CheckMessageHandler extends AbstractMessageHandler {
 						}
 
 						log.info("getting message to read");
-						final Message message1 = contextProcessor.getNextMessage();
-						contextProcessor.setPreviousMessage(message1);
-						_sessionService.setContext(contextProcessor.getContext());
+						final Message message1 = context.getNextMessage();
+						context.setPreviousMessage(message1);
+						_sessionService.setContext(context.getContext());
 
 						return newCheckMessageAskResponse("Next message", message1.getMessage());
 				}

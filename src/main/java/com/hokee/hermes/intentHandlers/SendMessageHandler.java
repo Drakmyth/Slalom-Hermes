@@ -26,12 +26,14 @@ public class SendMessageHandler extends AbstractMessageHandler {
 	private final IContactService _contactService;
 	private final IUserService _userService;
 	private final ISessionService _sessionService;
+	private final User _user;
 
 	public SendMessageHandler(final IMessageService messageService, final IContactService contactService, final IUserService userService, final ISessionService sessionService) {
 		_messageService = messageService;
 		_contactService = contactService;
 		_userService = userService;
 		_sessionService = sessionService;
+		_user = _userService.getUser(_sessionService.getSession().getUser().getUserId());
 	}
 
 	@Override
@@ -46,7 +48,7 @@ public class SendMessageHandler extends AbstractMessageHandler {
 			log.info("full intent found - recipient={}, message={}", recipientSlot.getValue(), messageSlot.getValue());
 
 			final String recipientName = intent.getSlot(RECIPIENT).getValue();
-			final Contact recipient = _contactService.getContact(recipientName);
+			final Contact recipient = _contactService.getContact(_user, recipientName);
 			final String message = intent.getSlot(MESSAGE).getValue();
 
 			return getFinalSendMessageResponse(recipient, message);
@@ -93,14 +95,14 @@ public class SendMessageHandler extends AbstractMessageHandler {
 
 		final String recipientName = intent.getSlot(RECIPIENT).getValue();
 
-		if (!_contactService.doesContactExist(recipientName)) {
+		if (!_contactService.doesContactExistForName(_user, recipientName)) {
 			final String response = "The contact " + recipientName + " does not exist. " +
 					"Who would you like to send a message to?";
 
 			return newAskResponse(response, response);
 		}
 
-		final Contact recipient = _contactService.getContact(recipientName);
+		final Contact recipient = _contactService.getContact(_user, recipientName);
 
 		// if we have message perform final request
 		if (_sessionService.getSession().getAttributes().containsKey(MESSAGE)) {
@@ -119,9 +121,7 @@ public class SendMessageHandler extends AbstractMessageHandler {
 
 	private SpeechletResponse getFinalSendMessageResponse(final Contact recipient, final String message) {
 
-		final User user = _userService.getUser();
-
-		final SendMessageResult result =_messageService.sendMessage(user, recipient, message);
+		final SendMessageResult result =_messageService.sendMessage(recipient, message);
 
 		final SimpleCard card = new SimpleCard();
 		final PlainTextOutputSpeech speech = new PlainTextOutputSpeech();

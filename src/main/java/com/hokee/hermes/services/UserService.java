@@ -9,12 +9,17 @@ public class UserService implements IUserService {
 	private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
 	@Override
-	public User getUser() {
+	public User getUser(final String id) {
 		log.info("getUser called");
 
 		final User user = new User();
 		user.setId("0000");
 
 		return user;
+	}
+
+	@Override
+	public User getUserForPin(final String pin) {
+		return getUser("0000");
 	}
 }

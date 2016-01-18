@@ -7,7 +7,7 @@ import com.hokee.shared.SendMessageResult;
 import com.hokee.shared.User;
 
 public interface IMessageService {
-	SendMessageResult sendMessage(final User sender, final Contact recipient, String message);
+	SendMessageResult sendMessage(final Contact contact, String message);
 	List<Message> getMessages(final User user);
-	boolean deleteMessage(final String messageId);
+	boolean deleteMessage(final User user, final String messageId);
 }

@@ -26,7 +26,10 @@ public class SessionService implements ISessionService {
 
 	@Override
 	public Context currentContext() {
-		return (Context) _session.getAttribute(CURRENT_CONTEXT);
+		if (_session.getAttributes().containsKey(CURRENT_CONTEXT)) {
+			return (Context)_session.getAttribute(CURRENT_CONTEXT);
+		}
+		return null;
 	}
 
 	@Override
@@ -36,8 +39,10 @@ public class SessionService implements ISessionService {
 
 	@Override
 	public <T> T getContext() {
-		log.info("attributes {}", _session.getAttributes());
-		return (T) _session.getAttribute(CONTEXT);
+		if (_session.getAttributes().containsKey(CONTEXT)) {
+			return (T) _session.getAttribute(CONTEXT);
+		}
+		return null;
 	}
 
 	@Override

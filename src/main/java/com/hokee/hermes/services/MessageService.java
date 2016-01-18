@@ -27,11 +27,11 @@ public class MessageService implements IMessageService {
 	}
 
 	@Override
-	public SendMessageResult sendMessage(final User sender, final Contact recipient, final String message) {
-		log.info("sendMessage sender={}, recipient={}, message={}", sender.getName(), recipient.getName(), message);
+	public SendMessageResult sendMessage(final Contact contact, final String message) {
+		log.info("sendMessage sender={}, recipient={}, message={}", contact.getUser().getName(), contact.getContact().getName(), message);
 
 		// TODO: need to secure API endpoints and use headers for Auth
-		final Message body = new Message(sender.getId(), recipient.getId(), message);
+		final Message body = new Message(contact.getUser().getId(), contact.getContact().getId(), message);
 		HttpEntity<Message> request = new HttpEntity<>(body, new HttpHeaders());
 		final SendMessageResult result = _restTemplate.postForEntity(_config.getSendMessageAPIEndpoint(), request, SendMessageResult.class).getBody();
 
@@ -52,7 +52,7 @@ public class MessageService implements IMessageService {
 	}
 
 	@Override
-	public boolean deleteMessage(final String messageId) {
+	public boolean deleteMessage(final User user, final String messageId) {
 
 		// TODO: use rest template
 		return true;

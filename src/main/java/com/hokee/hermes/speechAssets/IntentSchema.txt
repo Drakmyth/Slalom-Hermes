@@ -30,13 +30,16 @@
           "type": "AMAZON.FOUR_DIGIT_NUMBER"
         },
         {
-          "confirm_pin":
-        },
-        {
           "name": "name",
           "type": "AMAZON.US_FIRST_NAME"
         }
       ]
+    },
+    {
+      "intent": "ConfirmYes"
+    },
+    {
+      "intent": "ConfirmNo"
     },
     {
       "intent": "AMAZON.HelpIntent"

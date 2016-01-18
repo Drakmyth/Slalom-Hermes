@@ -1,5 +1,6 @@
 package com.hokee.hermes;
 
+import static com.hokee.hermes.contexts.Context.AddContact;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.amazon.speech.slu.Intent;
@@ -14,7 +15,10 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
-import com.hokee.hermes.intentHandlers.AddContactHandler;
+import com.hokee.hermes.contexts.Context;
+import com.hokee.hermes.contexts.addContact.AddContactContext;
+import com.hokee.hermes.contexts.addContact.AddContactProcessor;
+import com.hokee.hermes.contexts.checkMessage.CheckMessageContext;
 import com.hokee.hermes.intentHandlers.CheckMessageHandler;
 import com.hokee.hermes.intentHandlers.SendMessageHandler;
 import com.hokee.hermes.interfaces.IContactService;
@@ -54,22 +58,74 @@ public class HermesSpeechlet implements Speechlet {
 		return getWelcomeResponse();
 	}
 
+	private boolean setUpContext(final Intent intent) {
+
+		final String intentName = (intent != null) ? intent.getName() : null;
+
+		if (HermesIntents.SendMessage.name().equals(intentName)) {
+			log.info("setting new context for {}", intentName);
+
+			_sessionService.setCurrentContext(Context.SendMessage);
+			return true;
+
+		} else if (HermesIntents.CheckMessage.name().equals(intentName)) {
+			log.info("setting new context for {}", intentName);
+
+			_sessionService.setCurrentContext(Context.CheckMessages);
+			final CheckMessageContext context = new CheckMessageContext();
+			_sessionService.setContext(context);
+			return true;
+
+		} else if (HermesIntents.AddContact.name().equals(intentName)) {
+			log.info("setting new context for {}", intentName);
+
+			_sessionService.setCurrentContext(AddContact);
+			final AddContactContext context = new AddContactContext();
+			_sessionService.setContext(context);
+			return true;
+
+		}
+
+		return false;
+	}
+
 	@Override
 	public SpeechletResponse onIntent(final IntentRequest request, final Session session)
 			throws SpeechletException {
 		log.info("onIntent requestId={}, sessionId={}", request.getRequestId(),
 				  session.getSessionId());
 
-		Intent intent = request.getIntent();
-		String intentName = (intent != null) ? intent.getName() : null;
+		// get context
+		final Context context = _sessionService.currentContext();
+		final Intent intent = request.getIntent();
+		final String intentName = (intent != null) ? intent.getName() : null;
 
-		log.info("intent found={}", intentName);
+		log.info("onIntent context={}, intent={}", context, intentName);
+
+		// if no context try and start a new one
+		if (context == null) {
+			// if no context was setup then handle one shot intent (intents that don't need contexts)
+			if (!setUpContext(intent)) {
+				if ("AMAZON.Help".equals(intentName)) {
+					return getHelpResponse();
+				} else {
+					return getErrorResponse();
+				}
+			}
+		}
+
+		switch (_sessionService.currentContext()) {
+			case AddContact: {
+				log.info("in AddContact context");
+				return new AddContactProcessor(_messageService, _contactService, _userService, _sessionService).handleRequest(intent);
+			}
+		}
+
+		log.info("****** intent found={}", intentName);
 		if (HermesIntents.SendMessage.name().equals(intentName)) {
 			return new SendMessageHandler(_messageService, _contactService, _userService, _sessionService).handleIntent(intent);
 		} else if (HermesIntents.CheckMessage.name().equals(intentName)) {
 			return new CheckMessageHandler(_messageService, _contactService, _userService, _sessionService).handleIntent(intent);
-		} else if (HermesIntents.AddContact.name().equals(intentName)) {
-			return new AddContactHandler(_messageService, _contactService, _userService, _sessionService).handleIntent(intent);
 		} else if ("AMAZON.Help".equals(intentName)) {
 			return getHelpResponse();
 		} else {
@@ -131,5 +187,9 @@ public class HermesSpeechlet implements Speechlet {
 		reprompt.setOutputSpeech(speech);
 
 		return SpeechletResponse.newAskResponse(speech, reprompt, card);
+	}
+
+	private SpeechletResponse getErrorResponse() {
+		return null;
 	}
 }

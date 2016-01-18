@@ -43,3 +43,6 @@ CheckMessage {action}
 AddContact add a new contact
 AddContact {pin}
 AddContact {name}
+
+ConfirmYes yes
+ConfirmNo no

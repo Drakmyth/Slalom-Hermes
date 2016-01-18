@@ -17,7 +17,7 @@ public class CheckMessageContext extends AbstractContext {
 	public CheckMessageContext() {
 		_messages = new ArrayList<>();
 		_previousMessage = null;
-		_stage = null;
+		_stage = CheckMessageContextStage.GET_MESSAGES;
 	}
 
 	public List<Message> getMessages() {
