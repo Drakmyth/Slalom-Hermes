@@ -114,11 +114,18 @@ public class HermesSpeechlet implements Speechlet {
 			}
 		}
 
-		switch (_sessionService.currentContext()) {
-			case AddContact: {
-				log.info("in AddContact context");
-				return new AddContactProcessor(_messageService, _contactService, _userService, _sessionService).handleRequest(intent);
+		try {
+			switch (_sessionService.currentContext()) {
+				case AddContact: {
+					log.info("in AddContact context");
+					return new AddContactProcessor(_messageService, _contactService, _userService, _sessionService).handleRequest(intent);
+				}
 			}
+		} catch (final SpeechletException ex) {
+			final PlainTextOutputSpeech output = new PlainTextOutputSpeech();
+			output.setText(ex.getMessage());
+
+			return SpeechletResponse.newTellResponse(output);
 		}
 
 		log.info("****** intent found={}", intentName);
