@@ -10,6 +10,9 @@ public class AddContact {
 	private static final Logger logger = LoggerFactory.getLogger(AddContact.class);
 
 	public static AddMessageResult handleRequest(final Contact contact, final Context context) {
-		return null;
+		final AddMessageResult result = new AddMessageResult();
+		result.setMessage("");
+		result.setSuccess(true);
+		return result;
 	}
 }

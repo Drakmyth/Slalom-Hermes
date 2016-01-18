@@ -10,6 +10,9 @@ public class DeleteMessage {
 	private static final Logger logger = LoggerFactory.getLogger(DeleteMessage.class);
 
 	public static DeleteMessageResult handleRequest(final String messageId, final Context context) {
-		return null;
+		final DeleteMessageResult result = new DeleteMessageResult();
+		result.setMessage("");
+		result.setSuccess(true);
+		return result;
 	}
 }

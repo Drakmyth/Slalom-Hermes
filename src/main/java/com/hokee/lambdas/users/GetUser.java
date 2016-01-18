@@ -10,6 +10,6 @@ public class GetUser {
 	private static final Logger logger = LoggerFactory.getLogger(GetUser.class);
 
 	public static User handleRequest(final String userId, final Context context) {
-		return null;
+		return new User("id", "name");
 	}
 }
