@@ -8,6 +8,7 @@ import com.hokee.hermes.contexts.Context;
 import com.hokee.hermes.interfaces.ISessionService;
 
 public class SessionService implements ISessionService {
+
 	private static final Logger log = LoggerFactory.getLogger(SessionService.class);
 
 	private final static String CONTEXT = "context";
@@ -16,11 +17,13 @@ public class SessionService implements ISessionService {
 	private final Session _session;
 
 	public SessionService(final Session session) {
+
 		_session = session;
 	}
 
 	@Override
 	public Session getSession() {
+
 		return _session;
 	}
 
@@ -34,6 +37,7 @@ public class SessionService implements ISessionService {
 
 	@Override
 	public void setCurrentContext(final Context context) {
+
 		_session.setAttribute(CURRENT_CONTEXT, context);
 	}
 

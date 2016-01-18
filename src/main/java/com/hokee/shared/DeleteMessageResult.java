@@ -1,14 +1,23 @@
 package com.hokee.shared;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class DeleteMessageResult {
 
 	private boolean _success;
 	private String _message;
 
+	@Deprecated
 	public DeleteMessageResult() {
+
+		_success = false;
+		_message = null;
 	}
 
-	private DeleteMessageResult(final boolean success, final String message) {
+	@JsonCreator
+	private DeleteMessageResult(@JsonProperty("success") final boolean success,
+	                            @JsonProperty("message") final String message) {
 
 		_success = success;
 		_message = message;
@@ -24,21 +33,27 @@ public class DeleteMessageResult {
 		return new DeleteMessageResult(false, message);
 	}
 
+	@JsonProperty("success")
 	public boolean isSuccess() {
 
 		return _success;
 	}
 
+	@Deprecated
+	public void setSuccess(final boolean success) {
+
+		_success = success;
+	}
+
+	@JsonProperty("message")
 	public String getMessage() {
 
 		return _message;
 	}
 
-	public void setSuccess(final boolean _success) {
-		this._success = _success;
-	}
+	@Deprecated
+	public void setMessage(final String message) {
 
-	public void setMessage(final String _message) {
-		this._message = _message;
+		_message = message;
 	}
 }

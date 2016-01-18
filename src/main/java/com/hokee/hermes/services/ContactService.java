@@ -7,6 +7,7 @@ import com.hokee.shared.Contact;
 import com.hokee.shared.User;
 
 public class ContactService implements IContactService {
+
 	private static final Logger log = LoggerFactory.getLogger(ContactService.class);
 
 	@Override
