@@ -53,7 +53,7 @@ public class AddContactProcessor extends AbstractContextProcessor {
 				return getSaveContactResponse(intent);
 		}
 
-		throw new SpeechletException("Problem processing request");
+		throw new SpeechletException("Problem processing add contact request");
 	}
 
 	private SpeechletResponse getGetPinResponse(final Intent intent) throws SpeechletException {

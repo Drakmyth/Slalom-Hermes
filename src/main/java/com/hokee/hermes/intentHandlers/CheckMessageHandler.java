@@ -82,8 +82,8 @@ public class CheckMessageHandler extends AbstractMessageHandler {
 				log.info("adding messages to context");
 				context.addMessages(messages);
 
-				log.info("setting stage to {}", CheckMessageContextStage.READ_NEXT.name());
-				context.setStage(CheckMessageContextStage.READ_NEXT);
+				log.info("setting stage to {}", CheckMessageContextStage.READ_NEXT_MESSAGE.name());
+				context.setStage(CheckMessageContextStage.READ_NEXT_MESSAGE);
 
 				log.info("getting message to read");
 				final Message message = context.getNextMessage();
@@ -99,7 +99,7 @@ public class CheckMessageHandler extends AbstractMessageHandler {
 						"You have " + messages.size() + " messages. First message ",
 						message.getMessage());
 
-			case READ_NEXT:
+			case READ_NEXT_MESSAGE:
 
 				if (actionSlot == null || actionSlot.getValue() == null) {
 					throw new SpeechletException("Action missing");
