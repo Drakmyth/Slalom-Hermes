@@ -15,8 +15,8 @@ import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hokee.shared.Message;
-import com.hokee.shared.User;
+import com.hokee.shared.models.Message;
+import com.hokee.shared.models.User;
 
 public class GetMessages {
 

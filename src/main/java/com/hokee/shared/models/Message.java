@@ -1,4 +1,4 @@
-package com.hokee.shared;
+package com.hokee.shared.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

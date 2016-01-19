@@ -3,7 +3,7 @@ package com.hokee.hermes.contexts.sendMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.hokee.hermes.contexts.AbstractContext;
-import com.hokee.shared.Contact;
+import com.hokee.shared.models.Contact;
 
 public class SendMessageContext extends AbstractContext {
 	private static final Logger log = LoggerFactory.getLogger(SendMessageContext.class);

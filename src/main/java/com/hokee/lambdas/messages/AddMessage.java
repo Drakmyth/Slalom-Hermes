@@ -13,8 +13,8 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hokee.shared.Message;
-import com.hokee.shared.AddMessageResult;
+import com.hokee.shared.models.Message;
+import com.hokee.shared.results.AddMessageResult;
 
 public class AddMessage {
 

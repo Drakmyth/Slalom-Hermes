@@ -10,10 +10,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
 import com.hokee.hermes.config.MessageServiceConfig;
 import com.hokee.hermes.interfaces.IMessageService;
-import com.hokee.shared.Contact;
-import com.hokee.shared.Message;
-import com.hokee.shared.AddMessageResult;
-import com.hokee.shared.User;
+import com.hokee.shared.models.Contact;
+import com.hokee.shared.models.Message;
+import com.hokee.shared.results.AddMessageResult;
+import com.hokee.shared.models.User;
 
 public class MessageService implements IMessageService {
 

@@ -3,8 +3,8 @@ package com.hokee.lambdas.messages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.amazonaws.services.lambda.runtime.Context;
-import com.hokee.shared.DeleteMessageRequest;
-import com.hokee.shared.DeleteMessageResult;
+import com.hokee.shared.requests.DeleteMessageRequest;
+import com.hokee.shared.results.DeleteMessageResult;
 
 public class DeleteMessage {
 
