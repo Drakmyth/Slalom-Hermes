@@ -14,6 +14,7 @@ public class GetContactResult {
 	public GetContactResult() {
 
 		_success = false;
+		_contact = null;
 		_errorMessage = null;
 	}
 
