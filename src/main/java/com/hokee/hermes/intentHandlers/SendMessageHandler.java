@@ -1,7 +1,5 @@
 package com.hokee.hermes.intentHandlers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.slu.Slot;
 import com.amazon.speech.speechlet.SpeechletException;
@@ -13,10 +11,13 @@ import com.hokee.hermes.interfaces.IMessageService;
 import com.hokee.hermes.interfaces.ISessionService;
 import com.hokee.hermes.interfaces.IUserService;
 import com.hokee.shared.models.Contact;
-import com.hokee.shared.results.AddMessageResult;
 import com.hokee.shared.models.User;
+import com.hokee.shared.results.AddMessageResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SendMessageHandler extends AbstractMessageHandler {
+
 	private static final Logger log = LoggerFactory.getLogger(SendMessageHandler.class);
 
 	private static final String MESSAGE = "message";
@@ -29,6 +30,7 @@ public class SendMessageHandler extends AbstractMessageHandler {
 	private final User _user;
 
 	public SendMessageHandler(final IMessageService messageService, final IContactService contactService, final IUserService userService, final ISessionService sessionService) {
+
 		_messageService = messageService;
 		_contactService = contactService;
 		_userService = userService;
@@ -44,7 +46,7 @@ public class SendMessageHandler extends AbstractMessageHandler {
 		Slot recipientSlot = intent.getSlot(RECIPIENT);
 		Slot messageSlot = intent.getSlot(MESSAGE);
 		if (recipientSlot != null && recipientSlot.getValue() != null &&
-				messageSlot != null && messageSlot.getValue() != null) {
+		    messageSlot != null && messageSlot.getValue() != null) {
 			log.info("full intent found - recipient={}, message={}", recipientSlot.getValue(), messageSlot.getValue());
 
 			final String recipientName = intent.getSlot(RECIPIENT).getValue();
@@ -78,7 +80,7 @@ public class SendMessageHandler extends AbstractMessageHandler {
 
 		// if we have contact perform final request
 		if (_sessionService.getSession().getAttributes().containsKey(RECIPIENT)) {
-			final Contact contact = (Contact) _sessionService.getSession().getAttribute(RECIPIENT);
+			final Contact contact = (Contact)_sessionService.getSession().getAttribute(RECIPIENT);
 
 			return getFinalSendMessageResponse(contact, message);
 		}
@@ -97,7 +99,7 @@ public class SendMessageHandler extends AbstractMessageHandler {
 
 		if (!_contactService.doesContactExistForName(_user, recipientName)) {
 			final String response = "The contact " + recipientName + " does not exist. " +
-					"Who would you like to send a message to?";
+			                        "Who would you like to send a message to?";
 
 			return newAskResponse(response, response);
 		}
@@ -121,7 +123,7 @@ public class SendMessageHandler extends AbstractMessageHandler {
 
 	private SpeechletResponse getFinalSendMessageResponse(final Contact recipient, final String message) {
 
-		final AddMessageResult result =_messageService.sendMessage(recipient, message);
+		final AddMessageResult result = _messageService.sendMessage(recipient, message);
 
 		final SimpleCard card = new SimpleCard();
 		final PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
@@ -132,7 +134,7 @@ public class SendMessageHandler extends AbstractMessageHandler {
 			speech.setText("Message sent");
 		} else {
 			card.setTitle("Failed to send message to " + recipient.getName());
-			card.setContent(result.getMessage());
+			card.setContent(result.getErrorMessage());
 
 			speech.setText("Failed to send message");
 		}
