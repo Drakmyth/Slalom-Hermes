@@ -154,7 +154,7 @@ public class AddContactProcessor extends AbstractContextProcessor {
 		final String intentName = (intent != null) ? intent.getName() : null;
 		log.info("in saveContact stage intent={}", intentName);
 
-		if (HermesIntents.AddContact.name().equals(intentName)) {
+		if (HermesIntents.ContactName.name().equals(intentName)) {
 			final Slot nameSlot = intent.getSlot(NAME);
 			if (nameSlot == null || nameSlot.getValue() == null) {
 				throw new SpeechletException("Name missing");

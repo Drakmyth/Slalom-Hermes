@@ -20,7 +20,7 @@ import com.hokee.hermes.contexts.addContact.AddContactContext;
 import com.hokee.hermes.contexts.addContact.AddContactProcessor;
 import com.hokee.hermes.contexts.checkMessage.CheckMessageContext;
 import com.hokee.hermes.contexts.checkMessage.CheckMessageProcessor;
-import com.hokee.hermes.intentHandlers.SendMessageHandler;
+import com.hokee.hermes.contexts.sendMessage.SendMessageProcessor;
 import com.hokee.hermes.interfaces.IContactService;
 import com.hokee.hermes.interfaces.IMessageService;
 import com.hokee.hermes.interfaces.ISessionService;
@@ -122,6 +122,9 @@ public class HermesSpeechlet implements Speechlet {
 				case CheckMessages:
 					log.info("in CheckMessage context");
 					return new CheckMessageProcessor(_messageService, _contactService, _userService, _sessionService).handleRequest(intent);
+				case SendMessage:
+					log.info("in SendMessage context");
+					return new SendMessageProcessor(_messageService, _contactService, _userService, _sessionService).handleRequest(intent);
 			}
 		} catch (final SpeechletException ex) {
 			final PlainTextOutputSpeech output = new PlainTextOutputSpeech();
@@ -130,14 +133,7 @@ public class HermesSpeechlet implements Speechlet {
 			return SpeechletResponse.newTellResponse(output);
 		}
 
-		log.info("****** intent found={}", intentName);
-		if (HermesIntents.SendMessage.name().equals(intentName)) {
-			return new SendMessageHandler(_messageService, _contactService, _userService, _sessionService).handleIntent(intent);
-		} else if ("AMAZON.Help".equals(intentName)) {
-			return getHelpResponse();
-		} else {
-			throw new SpeechletException("Invalid Intent Detected");
-		}
+		throw new SpeechletException("There was a problem determining the context and or the intent");
 	}
 
 	@Override

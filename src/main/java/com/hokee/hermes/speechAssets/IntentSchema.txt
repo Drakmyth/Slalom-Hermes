@@ -1,15 +1,14 @@
 {
   "intents": [
     {
-      "intent": "SendMessage",
+      "intent": "SendMessage"
+    },
+    {
+      "intent": "Message",
       "slots": [
         {
           "name": "message",
           "type": "AMAZON.LITERAL"
-        },
-        {
-          "name": "friend",
-          "type": "AMAZON.US_FIRST_NAME"
         }
       ]
     },
@@ -28,7 +27,12 @@
         {
           "name": "pin",
           "type": "AMAZON.FOUR_DIGIT_NUMBER"
-        },
+        }
+      ]
+    },
+    {
+      "intent": "ContactName",
+      "slots": [
         {
           "name": "name",
           "type": "AMAZON.US_FIRST_NAME"
