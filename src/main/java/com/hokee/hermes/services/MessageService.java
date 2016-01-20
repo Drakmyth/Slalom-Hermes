@@ -1,19 +1,20 @@
 package com.hokee.hermes.services;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import com.hokee.hermes.config.MessageServiceConfig;
+import com.hokee.hermes.interfaces.IMessageService;
+import com.hokee.shared.models.Contact;
+import com.hokee.shared.models.Message;
+import com.hokee.shared.models.User;
+import com.hokee.shared.results.AddMessageResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
-import com.hokee.hermes.config.MessageServiceConfig;
-import com.hokee.hermes.interfaces.IMessageService;
-import com.hokee.shared.Contact;
-import com.hokee.shared.Message;
-import com.hokee.shared.AddMessageResult;
-import com.hokee.shared.User;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class MessageService implements IMessageService {
 
@@ -30,6 +31,7 @@ public class MessageService implements IMessageService {
 
 	@Override
 	public AddMessageResult sendMessage(final Contact contact, final String message) {
+
 		log.info("sendMessage sender={}, recipient={}, message={}", contact.getUser().getName(), contact.getContact().getName(), message);
 
 		// TODO: need to secure API endpoints and use headers for Auth
@@ -38,7 +40,7 @@ public class MessageService implements IMessageService {
 		HttpEntity<Message> request = new HttpEntity<>(body, new HttpHeaders());
 		final AddMessageResult result = _restTemplate.postForEntity(_config.getSendMessageAPIEndpoint(), request, AddMessageResult.class).getBody();
 
-		log.info("message sent status: {} - {}", result.isSuccess(), result.getMessage());
+		log.info("message sent status: {} - {}", result.isSuccess(), result.getErrorMessage());
 
 		return result;
 	}

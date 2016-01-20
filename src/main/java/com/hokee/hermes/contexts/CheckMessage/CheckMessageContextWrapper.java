@@ -3,7 +3,7 @@ package com.hokee.hermes.contexts.checkMessage;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.hokee.shared.Message;
+import com.hokee.shared.models.Message;
 
 // TODO change to a wrapper that the session service returns
 public class CheckMessageContextWrapper {

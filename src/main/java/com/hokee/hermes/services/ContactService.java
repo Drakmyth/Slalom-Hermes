@@ -3,8 +3,8 @@ package com.hokee.hermes.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.hokee.hermes.interfaces.IContactService;
-import com.hokee.shared.Contact;
-import com.hokee.shared.User;
+import com.hokee.shared.models.Contact;
+import com.hokee.shared.models.User;
 
 public class ContactService implements IContactService {
 

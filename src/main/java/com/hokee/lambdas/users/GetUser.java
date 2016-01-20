@@ -3,7 +3,7 @@ package com.hokee.lambdas.users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.amazonaws.services.lambda.runtime.Context;
-import com.hokee.shared.User;
+import com.hokee.shared.models.User;
 
 public class GetUser {
 
