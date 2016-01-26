@@ -12,8 +12,8 @@ import com.hokee.hermes.interfaces.IContactService;
 import com.hokee.hermes.interfaces.IMessageService;
 import com.hokee.hermes.interfaces.ISessionService;
 import com.hokee.hermes.interfaces.IUserService;
-import com.hokee.shared.AddMessageResult;
-import com.hokee.shared.User;
+import com.hokee.shared.results.AddMessageResult;
+import com.hokee.shared.models.User;
 
 public class SendMessageProcessor extends AbstractContextProcessor {
 	private static final Logger log = LoggerFactory.getLogger(SendMessageProcessor.class);

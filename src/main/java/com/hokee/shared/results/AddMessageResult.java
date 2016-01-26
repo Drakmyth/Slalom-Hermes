@@ -1,4 +1,4 @@
-package com.hokee.shared;
+package com.hokee.shared.results;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,21 +6,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AddMessageResult {
 
 	private boolean _success;
-	private String _message;
+	private String _errorMessage;
 
 	@Deprecated
 	public AddMessageResult() {
 
 		_success = false;
-		_message = null;
+		_errorMessage = null;
 	}
 
 	@JsonCreator
 	private AddMessageResult(@JsonProperty("success") final boolean success,
-							 @JsonProperty("message") final String message) {
+	                         @JsonProperty("errorMessage") final String errorMessage) {
 
 		_success = success;
-		_message = message;
+		_errorMessage = errorMessage;
 	}
 
 	public static AddMessageResult Success() {
@@ -28,9 +28,9 @@ public class AddMessageResult {
 		return new AddMessageResult(true, "Success");
 	}
 
-	public static AddMessageResult Failure(final String message) {
+	public static AddMessageResult Failure(final String errorMessage) {
 
-		return new AddMessageResult(false, message);
+		return new AddMessageResult(false, errorMessage);
 	}
 
 	@JsonProperty("success")
@@ -45,15 +45,15 @@ public class AddMessageResult {
 		_success = success;
 	}
 
-	@JsonProperty("message")
-	public String getMessage() {
+	@JsonProperty("errorMessage")
+	public String getErrorMessage() {
 
-		return _message;
+		return _errorMessage;
 	}
 
 	@Deprecated
-	public void setMessage(final String message) {
+	public void setErrorMessage(final String errorMessage) {
 
-		_message = message;
+		_errorMessage = errorMessage;
 	}
 }

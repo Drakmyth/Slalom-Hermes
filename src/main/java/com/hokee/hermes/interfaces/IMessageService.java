@@ -1,10 +1,10 @@
 package com.hokee.hermes.interfaces;
 
 import java.util.List;
-import com.hokee.shared.Contact;
-import com.hokee.shared.Message;
-import com.hokee.shared.AddMessageResult;
-import com.hokee.shared.User;
+import com.hokee.shared.models.Contact;
+import com.hokee.shared.models.Message;
+import com.hokee.shared.results.AddMessageResult;
+import com.hokee.shared.models.User;
 
 public interface IMessageService {
 	AddMessageResult sendMessage(final Contact contact, String message);
