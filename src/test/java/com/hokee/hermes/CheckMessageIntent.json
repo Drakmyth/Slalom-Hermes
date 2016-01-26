@@ -1,0 +1,25 @@
+{
+  "session": {
+    "sessionId": "SessionId.21453a93-13e7-4cb0-bd55-5213f4b32369",
+    "application": {
+      "applicationId": "amzn1.echo-sdk-ams.app.65301810-449f-447b-a5d7-58f5b97258a4"
+    },
+    "user": {
+      "userId": "amzn1.echo-sdk-account.AHLQR6NDTQFNEP6YAZFUCH45MPNXFCG4OUF7MYI6W2USPNRDNUJX4"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.417f1df0-75de-40e3-af80-a301024a1955",
+    "timestamp": "2016-01-20T05:39:50Z",
+    "intent": {
+      "name": "CheckMessage",
+      "slots": {
+        "action": {
+          "name": "action"
+        }
+      }
+    }
+  }
+}
