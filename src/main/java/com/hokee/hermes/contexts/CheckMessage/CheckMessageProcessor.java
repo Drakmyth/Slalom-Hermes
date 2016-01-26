@@ -1,7 +1,7 @@
 package com.hokee.hermes.contexts.checkMessage;
 
-import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.collections4.IteratorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.amazon.speech.slu.Intent;
@@ -61,7 +61,7 @@ public class CheckMessageProcessor extends AbstractContextProcessor {
 
 		if (HermesIntents.CheckMessage.name().equals(intentName)) {
 
-			final List<Message> messages = new ArrayList<>(_messageService.getMessages(_user));
+			final List<Message> messages = IteratorUtils.toList(_messageService.getMessages(_user).iterator());
 
 			log.info("found {} messages for user {}", messages.size(), _user.getName());
 			if (messages.size() == 0) {

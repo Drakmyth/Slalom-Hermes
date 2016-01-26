@@ -1,20 +1,22 @@
 package com.hokee.hermes.services;
 
-import com.hokee.hermes.config.MessageServiceConfig;
-import com.hokee.hermes.interfaces.IMessageService;
-import com.hokee.shared.models.Contact;
-import com.hokee.shared.models.Message;
-import com.hokee.shared.models.User;
-import com.hokee.shared.results.AddMessageResult;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import com.hokee.hermes.config.MessageServiceConfig;
+import com.hokee.hermes.interfaces.IMessageService;
+import com.hokee.shared.models.Contact;
+import com.hokee.shared.models.Message;
+import com.hokee.shared.models.User;
+import com.hokee.shared.requests.AddMessageRequest;
+import com.hokee.shared.requests.DeleteMessageRequest;
+import com.hokee.shared.requests.GetMessagesRequest;
+import com.hokee.shared.results.AddMessageResult;
+import com.hokee.shared.results.DeleteMessageResult;
+import com.hokee.shared.results.GetMessagesResult;
 
 public class MessageService implements IMessageService {
 
@@ -30,36 +32,46 @@ public class MessageService implements IMessageService {
 	}
 
 	@Override
-	public AddMessageResult sendMessage(final Contact contact, final String message) {
+	public boolean sendMessage(final Contact contact, final String message) {
 
 		log.info("sendMessage sender={}, recipient={}, message={}", contact.getUser().getName(), contact.getContact().getName(), message);
 
 		// TODO: need to secure API endpoints and use headers for Auth
-		final Message body = new Message(UUID.randomUUID().toString(), contact.getUser().getId(), contact.getContact().getId(), message);
+		final Message newMessage = new Message(UUID.randomUUID().toString(), contact.getUser().getId(), contact.getContact().getId(), message);
 
-		HttpEntity<Message> request = new HttpEntity<>(body, new HttpHeaders());
-		final AddMessageResult result = _restTemplate.postForEntity(_config.getSendMessageAPIEndpoint(), request, AddMessageResult.class).getBody();
+		final HttpEntity<AddMessageRequest> request = new HttpEntity<>(new AddMessageRequest(newMessage), new HttpHeaders());
+		final AddMessageResult result = _restTemplate.postForEntity(
+				_config.getSendMessageAPIEndpoint(), request, AddMessageResult.class).getBody();
 
 		log.info("message sent status: {} - {}", result.isSuccess(), result.getErrorMessage());
 
-		return result;
+		return result.isSuccess();
 	}
 
 	@Override
-	public List<Message> getMessages(final User user) {
+	public Iterable<Message> getMessages(final User user) {
 
-		// TODO: use rest template
-		final ArrayList<Message> messages = new ArrayList<>();
-		messages.add(new Message("000A", "0001", "0000", "message 1"));
-		messages.add(new Message("000B", "0003", "0000", "message 2"));
+		log.info("getMessages user={}", user.getName());
 
-		return messages;
+		final HttpEntity<GetMessagesRequest> request = new HttpEntity<>(new GetMessagesRequest(user), new HttpHeaders());
+		final GetMessagesResult result = _restTemplate.postForEntity(
+				_config.getGetMessagesAPIEndpoint(), request, GetMessagesResult.class).getBody();
+
+		return result.getMessages();
 	}
 
 	@Override
 	public boolean deleteMessage(final User user, final String messageId) {
 
-		// TODO: use rest template
-		return true;
+		log.info("deleteMessage user={}, messageId={}", user.getName(), messageId);
+
+		final HttpEntity<DeleteMessageRequest> request = new HttpEntity<>(new DeleteMessageRequest(user.getId(), messageId), new HttpHeaders());
+		final DeleteMessageResult result = _restTemplate.postForEntity(
+				_config.getDeleteMessageAPIEndpoint(), request, DeleteMessageResult.class).getBody();
+
+
+		log.info("message sent status: {} - {}", result.isSuccess(), result.getErrorMessage());
+
+		return result.isSuccess();
 	}
 }
