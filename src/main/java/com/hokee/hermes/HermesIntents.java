@@ -2,9 +2,11 @@ package com.hokee.hermes;
 
 public enum HermesIntents {
 	SendMessage,
-	CheckMessage,
+	CheckMessages,
+	Action,
 	Message,
 	AddContact,
+	Pin,
 	ContactName,
 	ConfirmYes,
 	ConfirmNo

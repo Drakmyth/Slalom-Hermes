@@ -68,7 +68,7 @@ public class HermesSpeechlet implements Speechlet {
 			_sessionService.setCurrentContext(Context.SendMessage);
 			return true;
 
-		} else if (HermesIntents.CheckMessage.name().equals(intentName)) {
+		} else if (HermesIntents.CheckMessages.name().equals(intentName)) {
 			log.info("setting new context for {}", intentName);
 
 			_sessionService.setCurrentContext(Context.CheckMessages);

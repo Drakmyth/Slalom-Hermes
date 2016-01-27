@@ -80,7 +80,7 @@ public class AddContactProcessor extends AbstractContextProcessor {
 		final String intentName = (intent != null) ? intent.getName() : null;
 		log.info("in confirmPin stage intent={}", intentName);
 
-		if (HermesIntents.AddContact.name().equals(intentName)) {
+		if (HermesIntents.Pin.name().equals(intentName)) {
 
 			final Slot pinSlot = intent.getSlot(PIN);
 			if (pinSlot == null || pinSlot.getValue() == null) {
