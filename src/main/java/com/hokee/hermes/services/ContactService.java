@@ -2,11 +2,17 @@ package com.hokee.hermes.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
 import com.hokee.hermes.config.ContactServiceConfig;
 import com.hokee.hermes.interfaces.IContactService;
 import com.hokee.shared.models.Contact;
 import com.hokee.shared.models.User;
+import com.hokee.shared.requests.AddContactRequest;
+import com.hokee.shared.requests.GetContactRequest;
+import com.hokee.shared.results.AddContactResult;
+import com.hokee.shared.results.GetContactResult;
 
 public class ContactService implements IContactService {
 
@@ -23,26 +29,44 @@ public class ContactService implements IContactService {
 	// used to verify user has contact for given contact name before sending message
 	@Override
 	public boolean doesContactExistForName(final User user, final String contactName) {
-		log.info("doesContactExist user={}, contactName={}", user, contactName);
-		return true;
-	}
 
-	// used to verify contact doesn't exist for user before adding
-	@Override
-	public boolean doesContactExistForUser(final User user, final User contact) {
-		log.info("doesContactExist user={}, contact={}", user, contact);
+		if (getContact(user, contactName) != null) {
+			return true;
+		}
+
 		return false;
 	}
 
 	@Override
 	public Contact getContact(final User user, final String contactName) {
-		log.info("getContact contactName={}", contactName);
-		return new Contact(new User(), new User(), "user");
+
+		log.info("getContact user={}, contactName={}", user.getId(), contactName);
+
+		final HttpEntity<GetContactRequest> request = new HttpEntity<>(new GetContactRequest(user.getId(), contactName), new HttpHeaders());
+		final GetContactResult result = _restTemplate.postForEntity(
+				_config.getGetContactAPIEndpoint(), request, GetContactResult.class).getBody();
+
+		if (result.isSuccess()) {
+			log.info("getContact status: {} - {}", result.isSuccess(), result.getErrorMessage());
+
+			return result.getContact();
+		}
+
+		log.info("getContact status: {} - {}", result.isSuccess(), result.getErrorMessage());
+		return null;
 	}
 
 	@Override
-	public void addContact(final User user, final User contact, final String name) {
-		log.info("addContact user={}, contact={}, name={}", user, contact, name);
+	public boolean addContact(final User user, final User contact, final String name) {
 
+		log.info("addContact user={}, contact={}, name={}", user.getId(), contact.getId(), name);
+
+		final HttpEntity<AddContactRequest> request = new HttpEntity<>(new AddContactRequest(new Contact(user, contact, name)), new HttpHeaders());
+		final AddContactResult result = _restTemplate.postForEntity(
+				_config.getAddContactAPIEndpoint(), request, AddContactResult.class).getBody();
+
+		log.info("addContact status: {} - {}", result.isSuccess(), result.getErrorMessage());
+
+		return result.isSuccess();
 	}
 }

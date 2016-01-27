@@ -34,7 +34,7 @@ public class MessageService implements IMessageService {
 	@Override
 	public boolean sendMessage(final Contact contact, final String message) {
 
-		log.info("sendMessage sender={}, recipient={}, message={}", contact.getUser().getName(), contact.getContact().getName(), message);
+		log.info("sendMessage sender={}, recipient={}, message={}", contact.getUser().getId(), contact.getContact().getId(), message);
 
 		// TODO: need to secure API endpoints and use headers for Auth
 		final Message newMessage = new Message(UUID.randomUUID().toString(), contact.getUser().getId(), contact.getContact().getId(), message);
@@ -43,7 +43,7 @@ public class MessageService implements IMessageService {
 		final AddMessageResult result = _restTemplate.postForEntity(
 				_config.getSendMessageAPIEndpoint(), request, AddMessageResult.class).getBody();
 
-		log.info("message sent status: {} - {}", result.isSuccess(), result.getErrorMessage());
+		log.info("sendMessage status: {} - {}", result.isSuccess(), result.getErrorMessage());
 
 		return result.isSuccess();
 	}
@@ -51,7 +51,7 @@ public class MessageService implements IMessageService {
 	@Override
 	public Iterable<Message> getMessages(final User user) {
 
-		log.info("getMessages user={}", user.getName());
+		log.info("getMessages user={}", user.getId());
 
 		final HttpEntity<GetMessagesRequest> request = new HttpEntity<>(new GetMessagesRequest(user), new HttpHeaders());
 		final GetMessagesResult result = _restTemplate.postForEntity(
@@ -63,14 +63,14 @@ public class MessageService implements IMessageService {
 	@Override
 	public boolean deleteMessage(final User user, final String messageId) {
 
-		log.info("deleteMessage user={}, messageId={}", user.getName(), messageId);
+		log.info("deleteMessage user={}, messageId={}", user.getId(), messageId);
 
 		final HttpEntity<DeleteMessageRequest> request = new HttpEntity<>(new DeleteMessageRequest(user.getId(), messageId), new HttpHeaders());
 		final DeleteMessageResult result = _restTemplate.postForEntity(
 				_config.getDeleteMessageAPIEndpoint(), request, DeleteMessageResult.class).getBody();
 
 
-		log.info("message delete status: {} - {}", result.isSuccess(), result.getErrorMessage());
+		log.info("deleteMessage status: {} - {}", result.isSuccess(), result.getErrorMessage());
 
 		return result.isSuccess();
 	}

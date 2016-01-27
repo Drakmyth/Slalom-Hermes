@@ -101,14 +101,6 @@ public class AddContactProcessor extends AbstractContextProcessor {
 				return newAskResponse(responseText, repromptText);
 			}
 
-			if (_contactService.doesContactExistForUser(_user, contact)) {
-				// user already has for this name
-				log.info("ending interaction, contact with the pin already exists");
-
-				final String responseText = "User with that pin is already in your contact list.";
-				return newTellResponse(responseText);
-			}
-
 			log.info("setting next stage to GET_NAME");
 			_context.setStage(AddContactContextStage.GET_NAME);
 			_context.setPin(pinSlot.getValue());
