@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 import org.springframework.web.client.RestTemplate;
 import com.amazon.speech.speechlet.lambda.SpeechletRequestStreamHandler;
+import com.hokee.hermes.config.ContactServiceConfig;
 import com.hokee.hermes.config.MessageServiceConfig;
+import com.hokee.hermes.config.UserServiceConfig;
 import com.hokee.hermes.services.ContactService;
 import com.hokee.hermes.services.MessageService;
 import com.hokee.hermes.services.UserService;
@@ -28,8 +30,8 @@ public class Hermes extends SpeechletRequestStreamHandler {
 		supportedApplicationIds.add("amzn1.echo-sdk-ams.app.65301810-449f-447b-a5d7-58f5b97258a4");
 
 		messageService = new MessageService(new MessageServiceConfig(), new RestTemplate());
-		contactService = new ContactService(config, restTemplate);
-		userService = new UserService(config, restTemplate);
+		contactService = new ContactService(new ContactServiceConfig(), new RestTemplate());
+		userService = new UserService(new UserServiceConfig(), new RestTemplate());
 	}
 
 	public Hermes() {

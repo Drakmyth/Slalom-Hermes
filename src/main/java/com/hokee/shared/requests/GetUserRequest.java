@@ -8,7 +8,7 @@ public class GetUserRequest {
 	private String _userId;
 
 	@JsonCreator
-	private GetUserRequest(@JsonProperty("userId") final String userId) {
+	public GetUserRequest(@JsonProperty("userId") final String userId) {
 		_userId = userId;
 	}
 
