@@ -70,7 +70,7 @@ public class MessageService implements IMessageService {
 				_config.getDeleteMessageAPIEndpoint(), request, DeleteMessageResult.class).getBody();
 
 
-		log.info("message sent status: {} - {}", result.isSuccess(), result.getErrorMessage());
+		log.info("message delete status: {} - {}", result.isSuccess(), result.getErrorMessage());
 
 		return result.isSuccess();
 	}
