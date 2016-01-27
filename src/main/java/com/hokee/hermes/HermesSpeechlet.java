@@ -117,10 +117,10 @@ public class HermesSpeechlet implements Speechlet {
 		try {
 			switch (_sessionService.currentContext()) {
 				case AddContact:
-					log.info("in AddContact context");
+					log.info("in addContact context");
 					return new AddContactProcessor(_messageService, _contactService, _userService, _sessionService).handleRequest(intent);
 				case CheckMessages:
-					log.info("in CheckMessage context");
+					log.info("in checkMessage context");
 					return new CheckMessageProcessor(_messageService, _contactService, _userService, _sessionService).handleRequest(intent);
 				case SendMessage:
 					log.info("in SendMessage context");
