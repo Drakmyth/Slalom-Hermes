@@ -28,7 +28,7 @@ public class Hermes extends SpeechletRequestStreamHandler {
 		supportedApplicationIds.add("amzn1.echo-sdk-ams.app.65301810-449f-447b-a5d7-58f5b97258a4");
 
 		messageService = new MessageService(new MessageServiceConfig(), new RestTemplate());
-		contactService = new ContactService();
+		contactService = new ContactService(config, restTemplate);
 		userService = new UserService();
 	}
 

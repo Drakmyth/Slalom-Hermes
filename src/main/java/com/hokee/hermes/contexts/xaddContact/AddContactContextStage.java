@@ -1,4 +1,4 @@
-package com.hokee.hermes.contexts.addContact;
+package com.hokee.hermes.contexts.xaddContact;
 
 public enum AddContactContextStage {
 	GET_PIN,

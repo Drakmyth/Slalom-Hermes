@@ -1,4 +1,4 @@
-package com.hokee.hermes.contexts.sendMessage;
+package com.hokee.hermes.contexts.xsendMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

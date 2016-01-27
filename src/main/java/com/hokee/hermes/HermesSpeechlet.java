@@ -16,11 +16,11 @@ import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 import com.hokee.hermes.contexts.Context;
-import com.hokee.hermes.contexts.addContact.AddContactContext;
-import com.hokee.hermes.contexts.addContact.AddContactProcessor;
-import com.hokee.hermes.contexts.checkMessage.CheckMessageContext;
-import com.hokee.hermes.contexts.checkMessage.CheckMessageProcessor;
-import com.hokee.hermes.contexts.sendMessage.SendMessageProcessor;
+import com.hokee.hermes.contexts.xaddContact.AddContactContext;
+import com.hokee.hermes.contexts.xaddContact.AddContactProcessor;
+import com.hokee.hermes.contexts.xheckMessage.CheckMessageContext;
+import com.hokee.hermes.contexts.xheckMessage.CheckMessageProcessor;
+import com.hokee.hermes.contexts.xsendMessage.SendMessageProcessor;
 import com.hokee.hermes.interfaces.IContactService;
 import com.hokee.hermes.interfaces.IMessageService;
 import com.hokee.hermes.interfaces.ISessionService;
@@ -117,10 +117,10 @@ public class HermesSpeechlet implements Speechlet {
 		try {
 			switch (_sessionService.currentContext()) {
 				case AddContact:
-					log.info("in AddContact context");
+					log.info("in xaddContact context");
 					return new AddContactProcessor(_messageService, _contactService, _userService, _sessionService).handleRequest(intent);
 				case CheckMessages:
-					log.info("in CheckMessage context");
+					log.info("in xheckMessage context");
 					return new CheckMessageProcessor(_messageService, _contactService, _userService, _sessionService).handleRequest(intent);
 				case SendMessage:
 					log.info("in SendMessage context");

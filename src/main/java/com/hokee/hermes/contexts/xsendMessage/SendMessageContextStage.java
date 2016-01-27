@@ -1,4 +1,4 @@
-package com.hokee.hermes.contexts.sendMessage;
+package com.hokee.hermes.contexts.xsendMessage;
 
 public enum SendMessageContextStage {
 	GET_CONTACT,

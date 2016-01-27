@@ -1,4 +1,4 @@
-package com.hokee.hermes.contexts.checkMessage;
+package com.hokee.hermes.contexts.xheckMessage;
 
 import java.util.List;
 import org.slf4j.Logger;
