@@ -8,7 +8,7 @@ public class GetUserForPinRequest {
 	private String _pin;
 
 	@JsonCreator
-	private GetUserForPinRequest(@JsonProperty("pin") final String pin) {
+	public GetUserForPinRequest(@JsonProperty("pin") final String pin) {
 		_pin = pin;
 	}
 

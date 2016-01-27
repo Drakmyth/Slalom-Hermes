@@ -29,7 +29,7 @@ public class Hermes extends SpeechletRequestStreamHandler {
 
 		messageService = new MessageService(new MessageServiceConfig(), new RestTemplate());
 		contactService = new ContactService(config, restTemplate);
-		userService = new UserService();
+		userService = new UserService(config, restTemplate);
 	}
 
 	public Hermes() {
