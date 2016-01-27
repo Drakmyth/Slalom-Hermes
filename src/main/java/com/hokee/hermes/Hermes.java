@@ -2,7 +2,6 @@ package com.hokee.hermes;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import org.springframework.web.client.RestTemplate;
 import com.amazon.speech.speechlet.lambda.SpeechletRequestStreamHandler;
 import com.hokee.hermes.config.MessageServiceConfig;
@@ -14,7 +13,7 @@ import com.hokee.hermes.services.UserService;
  * Hello world!
  *
  */
-public class App extends SpeechletRequestStreamHandler {
+public class Hermes extends SpeechletRequestStreamHandler {
 
 	private static final Set<String> supportedApplicationIds = new HashSet<String>();
 	private static MessageService messageService;
@@ -33,7 +32,7 @@ public class App extends SpeechletRequestStreamHandler {
 		userService = new UserService();
 	}
 
-	public App() {
+	public Hermes() {
 		super(new HermesSpeechlet(messageService, contactService, userService), supportedApplicationIds);
 	}
 }

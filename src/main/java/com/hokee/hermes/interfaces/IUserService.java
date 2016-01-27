@@ -1,8 +1,8 @@
 package com.hokee.hermes.interfaces;
 
-import com.hokee.hermes.models.User;
+import com.hokee.shared.models.User;
 
 public interface IUserService {
-
-	User getUser();
+	User getUser(final String id);
+	User getUserForPin(final String pin);
 }

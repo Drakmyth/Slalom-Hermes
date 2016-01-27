@@ -3,26 +3,34 @@ package com.hokee.hermes.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.hokee.hermes.interfaces.IContactService;
-import com.hokee.hermes.models.Contact;
+import com.hokee.shared.models.Contact;
+import com.hokee.shared.models.User;
 
 public class ContactService implements IContactService {
+
 	private static final Logger log = LoggerFactory.getLogger(ContactService.class);
 
 	@Override
-	public boolean doesContactExist(final String contactName) {
-		log.info("doesContactExist contactName={}", contactName);
-
+	public boolean doesContactExistForName(final User user, final String contactName) {
+		log.info("doesContactExist user={}, contactName={}", user, contactName);
 		return true;
 	}
 
 	@Override
-	public Contact getContact(final String contactName) {
+	public boolean doesContactExistForUser(final User user, final User contact) {
+		log.info("doesContactExist user={}, contact={}", user, contact);
+		return false;
+	}
+
+	@Override
+	public Contact getContact(final User user, final String contactName) {
 		log.info("getContact contactName={}", contactName);
+		return new Contact(new User(), new User(), "user");
+	}
 
-		final Contact contact = new Contact();
-		contact.setId("0001");
-		contact.setName(contactName);
+	@Override
+	public void addContact(final User user, final User contact, final String name) {
+		log.info("addContact user={}, contact={}, name={}", user, contact, name);
 
-		return contact;
 	}
 }
