@@ -1,4 +1,4 @@
-package com.hokee.hermes.contexts.xaddContact;
+package com.hokee.hermes.contexts.addContact;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

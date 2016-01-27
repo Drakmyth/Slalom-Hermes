@@ -1,4 +1,4 @@
-package com.hokee.hermes.contexts.xheckMessage;
+package com.hokee.hermes.contexts.checkMessage;
 
 import java.util.ArrayList;
 import java.util.List;

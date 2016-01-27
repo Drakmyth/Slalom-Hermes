@@ -1,4 +1,4 @@
-package com.hokee.hermes.contexts.xsendMessage;
+package com.hokee.hermes.contexts.sendMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,7 +133,7 @@ public class SendMessageProcessor extends AbstractContextProcessor {
 	private SpeechletResponse getSendMessageResponse(final Intent intent) throws SpeechletException {
 
 		final String intentName = (intent != null) ? intent.getName() : null;
-		log.info("in xsendMessage stage intent={}", intentName);
+		log.info("in sendMessage stage intent={}", intentName);
 
 		if (HermesIntents.ConfirmYes.name().equals(intentName)) {
 

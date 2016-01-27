@@ -1,4 +1,4 @@
-package com.hokee.hermes.contexts.xheckMessage;
+package com.hokee.hermes.contexts.checkMessage;
 
 public enum CheckMessageContextAction {
 	REPEAT,

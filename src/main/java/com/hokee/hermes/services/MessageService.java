@@ -34,7 +34,7 @@ public class MessageService implements IMessageService {
 	@Override
 	public boolean sendMessage(final Contact contact, final String message) {
 
-		log.info("xsendMessage sender={}, recipient={}, message={}", contact.getUser().getName(), contact.getContact().getName(), message);
+		log.info("sendMessage sender={}, recipient={}, message={}", contact.getUser().getName(), contact.getContact().getName(), message);
 
 		// TODO: need to secure API endpoints and use headers for Auth
 		final Message newMessage = new Message(UUID.randomUUID().toString(), contact.getUser().getId(), contact.getContact().getId(), message);
