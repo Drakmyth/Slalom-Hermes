@@ -1,8 +1,11 @@
 package com.hokee.hermes.interfaces;
 
-import com.amazon.speech.speechlet.User;
-import com.hokee.hermes.models.Contact;
+import com.hokee.shared.models.Contact;
+import com.hokee.shared.models.Message;
+import com.hokee.shared.models.User;
 
 public interface IMessageService {
-	void sendMessage(final User sender, final Contact recipient, String message);
+	boolean sendMessage(final Contact contact, String message);
+	Iterable<Message> getMessages(final User user);
+	boolean deleteMessage(final User user, final String messageId);
 }

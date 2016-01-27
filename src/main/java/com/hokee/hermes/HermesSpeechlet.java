@@ -1,5 +1,6 @@
 package com.hokee.hermes;
 
+import static com.hokee.hermes.contexts.Context.AddContact;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.amazon.speech.slu.Intent;
@@ -14,10 +15,16 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
+import com.hokee.hermes.contexts.Context;
+import com.hokee.hermes.contexts.addContact.AddContactContext;
+import com.hokee.hermes.contexts.addContact.AddContactProcessor;
+import com.hokee.hermes.contexts.checkMessage.CheckMessageContext;
+import com.hokee.hermes.contexts.checkMessage.CheckMessageProcessor;
+import com.hokee.hermes.contexts.sendMessage.SendMessageProcessor;
 import com.hokee.hermes.interfaces.IContactService;
 import com.hokee.hermes.interfaces.IMessageService;
 import com.hokee.hermes.interfaces.ISessionService;
-import com.hokee.hermes.models.HermesIntents;
+import com.hokee.hermes.interfaces.IUserService;
 import com.hokee.hermes.services.SessionService;
 
 public class HermesSpeechlet implements Speechlet {
@@ -25,18 +32,20 @@ public class HermesSpeechlet implements Speechlet {
 
 	private final IMessageService _messageService;
 	private final IContactService _contactService;
+	private final IUserService _userService;
 	private ISessionService _sessionService;
 
-	public HermesSpeechlet(final IMessageService messageService, final IContactService contactService) {
+	public HermesSpeechlet(final IMessageService messageService, final IContactService contactService, final IUserService userService) {
 		_messageService = messageService;
 		_contactService = contactService;
+		_userService = userService;
 	}
 
 	@Override
 	public void onSessionStarted(final SessionStartedRequest request, final Session session)
 			throws SpeechletException {
 		log.info("onSessionStarted requestId={}, sessionId={}", request.getRequestId(),
-				 session.getSessionId());
+				  session.getSessionId());
 
 		_sessionService = new SessionService(session);
 	}
@@ -45,33 +54,93 @@ public class HermesSpeechlet implements Speechlet {
 	public SpeechletResponse onLaunch(final LaunchRequest request, final Session session)
 			throws SpeechletException {
 		log.info("onLaunch requestId={}, sessionId={}", request.getRequestId(),
-				 session.getSessionId());
+				  session.getSessionId());
 		return getWelcomeResponse();
+	}
+
+	private boolean setUpContext(final Intent intent) {
+
+		final String intentName = (intent != null) ? intent.getName() : null;
+
+		if (HermesIntents.SendMessage.name().equals(intentName)) {
+			log.info("setting new context for {}", intentName);
+
+			_sessionService.setCurrentContext(Context.SendMessage);
+			return true;
+
+		} else if (HermesIntents.CheckMessage.name().equals(intentName)) {
+			log.info("setting new context for {}", intentName);
+
+			_sessionService.setCurrentContext(Context.CheckMessages);
+			final CheckMessageContext context = new CheckMessageContext();
+			_sessionService.setContext(context);
+			return true;
+
+		} else if (HermesIntents.AddContact.name().equals(intentName)) {
+			log.info("setting new context for {}", intentName);
+
+			_sessionService.setCurrentContext(AddContact);
+			final AddContactContext context = new AddContactContext();
+			_sessionService.setContext(context);
+			return true;
+
+		}
+
+		return false;
 	}
 
 	@Override
 	public SpeechletResponse onIntent(final IntentRequest request, final Session session)
 			throws SpeechletException {
 		log.info("onIntent requestId={}, sessionId={}", request.getRequestId(),
-				 session.getSessionId());
+				  session.getSessionId());
 
-		Intent intent = request.getIntent();
-		String intentName = (intent != null) ? intent.getName() : null;
+		// get context
+		final Context context = _sessionService.currentContext();
+		final Intent intent = request.getIntent();
+		final String intentName = (intent != null) ? intent.getName() : null;
 
-		if (HermesIntents.SendMessage.name().equals(intentName)) {
-			return new SendMessageHandler(_messageService, _contactService, _sessionService).getSendMessageResponse(intent);
-		} else if ("AMAZON.Help".equals(intentName)) {
-			return getHelpResponse();
-		} else {
-			throw new SpeechletException("Invalid Intent");
+		log.info("onIntent context={}, intent={}", context, intentName);
+
+		// if no context try and start a new one
+		if (context == null) {
+			// if no context was setup then handle one shot intent (intents that don't need contexts)
+			if (!setUpContext(intent)) {
+				if ("AMAZON.Help".equals(intentName)) {
+					return getHelpResponse();
+				} else {
+					return getErrorResponse();
+				}
+			}
 		}
+
+		try {
+			switch (_sessionService.currentContext()) {
+				case AddContact:
+					log.info("in AddContact context");
+					return new AddContactProcessor(_messageService, _contactService, _userService, _sessionService).handleRequest(intent);
+				case CheckMessages:
+					log.info("in CheckMessage context");
+					return new CheckMessageProcessor(_messageService, _contactService, _userService, _sessionService).handleRequest(intent);
+				case SendMessage:
+					log.info("in SendMessage context");
+					return new SendMessageProcessor(_messageService, _contactService, _userService, _sessionService).handleRequest(intent);
+			}
+		} catch (final SpeechletException ex) {
+			final PlainTextOutputSpeech output = new PlainTextOutputSpeech();
+			output.setText(ex.getMessage());
+
+			return SpeechletResponse.newTellResponse(output);
+		}
+
+		throw new SpeechletException("There was a problem determining the context and or the intent");
 	}
 
 	@Override
 	public void onSessionEnded(final SessionEndedRequest request, final Session session)
 			throws SpeechletException {
 		log.info("onSessionEnded requestId={}, sessionId={}", request.getRequestId(),
-				 session.getSessionId());
+				  session.getSessionId());
 		// any cleanup logic goes here
 	}
 
@@ -121,5 +190,9 @@ public class HermesSpeechlet implements Speechlet {
 		reprompt.setOutputSpeech(speech);
 
 		return SpeechletResponse.newAskResponse(speech, reprompt, card);
+	}
+
+	private SpeechletResponse getErrorResponse() {
+		return null;
 	}
 }

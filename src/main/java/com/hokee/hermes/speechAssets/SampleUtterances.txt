@@ -1,37 +1,20 @@
-SendMessage send {friend} a message that says {hello|message}
-SendMessage send {friend} a message that says {hey there|message}
-SendMessage send {friend} a message that says {how are you|message}
-SendMessage send {friend} a message that says {how are you today|message}
-SendMessage send {friend} a message that says {want to catch up later|message}
-SendMessage send {friend} a message that says {it's been good talking with you|message}
-SendMessage send {friend} the message {hello|message}
-SendMessage send {friend} the message {hey there|message}
-SendMessage send {friend} the message {how are you|message}
-SendMessage send {friend} the message {how are you today|message}
-SendMessage send {friend} the message {want to catch up later|message}
-SendMessage send {friend} the message {it's been good talking with you|message}
-SendMessage send {friend} the following {hello|message}
-SendMessage send {friend} the following {hey there|message}
-SendMessage send {friend} the following {how are you|message}
-SendMessage send {friend} the following {how are you today|message}
-SendMessage send {friend} the following {want to catch up later|message}
-SendMessage send {friend} the following {it's been good talking with you|message}
-SendMessage send {friend} the following message {hello|message}
-SendMessage send {friend} the following message {hey there|message}
-SendMessage send {friend} the following message {how are you|message}
-SendMessage send {friend} the following message {how are you today|message}
-SendMessage send {friend} the following message {want to catch up later|message}
-SendMessage send {friend} the following message {it's been good talking with you|message}
-SendMessage send {friend} the following message that says {hello|message}
-SendMessage send {friend} the following message that says {hey there|message}
-SendMessage send {friend} the following message that says {how are you|message}
-SendMessage send {friend} the following message that says {how are you today|message}
-SendMessage send {friend} the following message that says {want to catch up later|message}
-SendMessage send {friend} the following message that says {it's been good talking with you|message}
+SendMessage send a message
 
-SendMessage send {friend} a message
-SendMessage send {friend} a message
-SendMessage send {friend} a message
-SendMessage send {friend} a message
-SendMessage send {friend} a message
-SendMessage send {friend} a message
+CheckMessage do I have any messages
+CheckMessage to check for messages
+CheckMessage {action}
+
+AddContact add a new contact
+AddContact {pin}
+
+ContactName {name}
+
+ConfirmYes yes
+ConfirmNo no
+
+Message {hello|message}
+Message {hey there|message}
+Message {how are you|message}
+Message {how are you today|message}
+Message {want to catch up later|message}
+Message {it's been good talking with you|message}
