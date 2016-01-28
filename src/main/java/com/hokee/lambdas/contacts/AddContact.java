@@ -21,11 +21,12 @@ public class AddContact {
 		final String name = request.getContactName();
 
 		try {
-			String sql = String.format("SELECT * FROM Users WHERE pin=='%s'", contact_pin);
-			ResultSet results = DbService.executeQuery(sql);
+			String sql = String.format("SELECT * FROM \"Users\" WHERE pin='%s'", contact_pin);
+			final ResultSet results = DbService.executeQuery(sql);
+			results.next();
 			final String contact_guid = results.getString("user_guid");
 
-			sql = String.format("INSERT INTO Contacts (user_guid, contact_guid, name) VALUES ('%s', '%s', '%s')", user_guid, contact_guid, name);
+			sql = String.format("INSERT INTO \"Contacts\" (user_guid, contact_guid, name) VALUES ('%s', '%s', '%s')", user_guid, contact_guid, name);
 			DbService.execute(sql);
 		} catch (final SQLException e) {
 			final String errorMessage = "Failed accessing non-existent column.";

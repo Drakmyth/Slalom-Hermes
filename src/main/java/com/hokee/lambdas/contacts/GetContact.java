@@ -25,18 +25,21 @@ public class GetContact {
 
 		try {
 			// Lookup Contact
-			String sql = String.format("SELECT * FROM Contacts WHERE user_guid=='%s' AND name=='%s'", user_guid, name);
+			String sql = String.format("SELECT * FROM \"Contacts\" WHERE user_guid='%s' AND name='%s'", user_guid, name);
 			ResultSet results = DbService.executeQuery(sql);
+			results.next();
 			final String contact_guid = results.getString("contact_guid");
 
 			// Build my User model
-			sql = String.format("SELECT * FROM Users WHERE user_guid=='%s'", user_guid);
+			sql = String.format("SELECT * FROM \"Users\" WHERE user_guid='%s'", user_guid);
 			results = DbService.executeQuery(sql);
+			results.next();
 			final User user = new User(results.getString("user_guid"), results.getString("pin"));
 
 			// Build Contact's user model
-			sql = String.format("SELECT * FROM Users WHERE user_guid=='%s'", contact_guid);
+			sql = String.format("SELECT * FROM \"Users\" WHERE user_guid='%s'", contact_guid);
 			results = DbService.executeQuery(sql);
+			results.next();
 			final User contactUser = new User(results.getString("user_guid"), results.getString("pin"));
 
 			// Return

@@ -16,7 +16,7 @@ public class AddUser {
 		final String user_guid = request.getUserId();
 		final String user_pin = request.getPin();
 		
-		DbService.execute(String.format("INSERT INTO Users (user_guid, pin) VALUES ('%s', '%s')", user_guid, user_pin));
+		DbService.execute(String.format("INSERT INTO \"Users\" (user_guid, pin) VALUES ('%s', '%s')", user_guid, user_pin));
 
 		return AddUserResult.Success();
 	}
