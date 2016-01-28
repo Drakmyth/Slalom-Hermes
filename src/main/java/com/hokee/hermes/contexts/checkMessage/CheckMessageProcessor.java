@@ -59,7 +59,7 @@ public class CheckMessageProcessor extends AbstractContextProcessor {
 		final String intentName = (intent != null) ? intent.getName() : null;
 		log.info("in getMessages stage intent={}", intentName);
 
-		if (HermesIntents.CheckMessage.name().equals(intentName)) {
+		if (HermesIntents.CheckMessages.name().equals(intentName)) {
 
 			final List<Message> messages = IteratorUtils.toList(_messageService.getMessages(_user).iterator());
 
@@ -108,7 +108,7 @@ public class CheckMessageProcessor extends AbstractContextProcessor {
 		final String intentName = (intent != null) ? intent.getName() : null;
 		log.info("in readNextMessage stage intent={}", intentName);
 
-		if (HermesIntents.CheckMessage.name().equals(intentName)) {
+		if (HermesIntents.Action.name().equals(intentName)) {
 
 			final Slot actionSlot = intent.getSlot(ACTION);
 

@@ -1,0 +1,11 @@
+def ContactName (name contactName) {
+	{contactName}
+} => ContactName
+
+def ConfirmYes () {
+	Yes
+} => ConfirmYes
+
+def ConfirmNo () {
+	No
+} => ConfirmNo

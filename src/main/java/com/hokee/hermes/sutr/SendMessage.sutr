@@ -1,0 +1,17 @@
+def SendMessage () {
+	Send a message
+} => SendMessage
+
+literal Message [
+	the quick brown,
+	the quick brown fox,
+	the quick brown fox jumps,
+	the quick brown fox jumps over,
+	the quick brown fox jumps over the,
+	the quick brown fox jumps over the lazy,
+	the quick brown fox jumps over the lazy dog
+]
+
+def Message (Message message) {
+	{message}
+} => Message

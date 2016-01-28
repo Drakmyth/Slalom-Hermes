@@ -80,7 +80,7 @@ public class AddContactProcessor extends AbstractContextProcessor {
 		final String intentName = (intent != null) ? intent.getName() : null;
 		log.info("in confirmPin stage intent={}", intentName);
 
-		if (HermesIntents.AddContact.name().equals(intentName)) {
+		if (HermesIntents.Pin.name().equals(intentName)) {
 
 			final Slot pinSlot = intent.getSlot(PIN);
 			if (pinSlot == null || pinSlot.getValue() == null) {
@@ -99,14 +99,6 @@ public class AddContactProcessor extends AbstractContextProcessor {
 				final String responseText = "User for pin does not exist. What is the new context's 4 digit pin?";
 				final String repromptText = "What is the new context's 4 digit pin?";
 				return newAskResponse(responseText, repromptText);
-			}
-
-			if (_contactService.doesContactExistForUser(_user, contact)) {
-				// user already has for this name
-				log.info("ending interaction, contact with the pin already exists");
-
-				final String responseText = "User with that pin is already in your contact list.";
-				return newTellResponse(responseText);
 			}
 
 			log.info("setting next stage to GET_NAME");

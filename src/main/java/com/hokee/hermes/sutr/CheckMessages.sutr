@@ -1,0 +1,14 @@
+def CheckMessages () {
+	Do I have any message
+	To check for messages
+} => CheckMessages
+
+type Action [
+	repeat,
+	save,
+	delete
+]
+
+def Action (Action action) {
+	{action}
+} => Action

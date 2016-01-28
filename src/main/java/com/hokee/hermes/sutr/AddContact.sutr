@@ -1,0 +1,7 @@
+def AddContact () {
+	Add a new contact
+} => AddContact
+
+def Pin (digits pin) {
+	{pin}
+} => Pin
