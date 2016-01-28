@@ -13,9 +13,9 @@ import java.sql.Statement;
 public class DbService {
 
 	private static final Logger logger = LoggerFactory.getLogger(DbService.class);
-	private static final String CONNECTION_STRING = "jdbc:postgresql://HOST:PORT/DATABASE";
-	private static final String DB_USERNAME = "USERNAME";
-	private static final String DB_PASSWORD = "PASSWORD";
+	private static final String CONNECTION_STRING = "jdbc:postgresql://hermes.cq8xsjkup0br.us-east-1.rds.amazonaws.com:5432/hermes";
+	private static final String DB_USERNAME = "hermesftw";
+	private static final String DB_PASSWORD = "3ehtTJwEP3xhQZNr";
 
 	private static boolean driverLoaded = false;
 
@@ -52,9 +52,11 @@ public class DbService {
 
 		ResultSet retVal = null;
 
+		logger.debug("Opening db connection");
 		final Connection db = openConnection();
 		try {
 			final Statement stmt = db.createStatement();
+			logger.debug("executing sql: " + sql);
 			retVal = stmt.executeQuery(sql);
 		} catch (final SQLException e) {
 			logger.error("Error executing SQL statement", e);

@@ -21,8 +21,9 @@ public class GetUser {
 		final User retVal;
 
 		try {
-			String sql = String.format("SELECT * FROM Users WHERE user_guid=='%s'", user_guid);
+			String sql = String.format("SELECT * FROM \"Users\" WHERE user_guid='%s'", user_guid);
 			ResultSet results = DbService.executeQuery(sql);
+			results.next();
 			retVal = new User(user_guid, results.getString("pin"));
 		} catch (final SQLException e) {
 			final String errorMessage = "Failed accessing non-existent column.";
