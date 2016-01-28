@@ -137,14 +137,14 @@ public class SendMessageProcessor extends AbstractContextProcessor {
 
 		if (HermesIntents.ConfirmYes.name().equals(intentName)) {
 
-			final AddMessageResult result =_messageService.sendMessage(_context.getContact(), _context.getMessage());
+			_messageService.sendMessage(_context.getContact(), _context.getMessage());
 			final String responseText = "I'm sending your message now.";
 
 			return newTellResponse(_context.getMessage() + " " + responseText);
 
 		} else if (HermesIntents.ConfirmNo.name().equals(intentName)) {
 
-			final AddMessageResult result =_messageService.sendMessage(_context.getContact(), _context.getMessage());
+			_messageService.sendMessage(_context.getContact(), _context.getMessage());
 			final String responseText = "I'm sending your message now.";
 
 			return newTellResponse(responseText);

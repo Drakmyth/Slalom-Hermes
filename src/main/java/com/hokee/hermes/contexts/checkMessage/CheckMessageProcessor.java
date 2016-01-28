@@ -63,7 +63,7 @@ public class CheckMessageProcessor extends AbstractContextProcessor {
 
 			final List<Message> messages = IteratorUtils.toList(_messageService.getMessages(_user).iterator());
 
-			log.info("found {} messages for user {}", messages.size(), _user.getName());
+			log.info("found {} messages for user {}", messages.size(), _user.getPin());
 			if (messages.size() == 0) {
 				final PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
 				speech.setText("You have zero messages");

@@ -1,10 +1,5 @@
 package com.hokee.hermes.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.client.RestTemplate;
 import com.hokee.hermes.config.ContactServiceConfig;
 import com.hokee.hermes.interfaces.IContactService;
 import com.hokee.shared.models.Contact;
@@ -13,6 +8,11 @@ import com.hokee.shared.requests.AddContactRequest;
 import com.hokee.shared.requests.GetContactRequest;
 import com.hokee.shared.results.AddContactResult;
 import com.hokee.shared.results.GetContactResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.client.RestTemplate;
 
 public class ContactService implements IContactService {
 
@@ -22,6 +22,7 @@ public class ContactService implements IContactService {
 	private RestTemplate _restTemplate;
 
 	public ContactService(final ContactServiceConfig config, final RestTemplate restTemplate) {
+
 		_config = config;
 		_restTemplate = restTemplate;
 	}
@@ -61,7 +62,7 @@ public class ContactService implements IContactService {
 
 		log.info("addContact user={}, contact={}, name={}", user.getId(), contact.getId(), name);
 
-		final HttpEntity<AddContactRequest> request = new HttpEntity<>(new AddContactRequest(new Contact(user, contact, name)), new HttpHeaders());
+		final HttpEntity<AddContactRequest> request = new HttpEntity<>(new AddContactRequest(user.getId(), contact.getPin(), name), new HttpHeaders());
 		final AddContactResult result = _restTemplate.postForEntity(
 				_config.getAddContactAPIEndpoint(), request, AddContactResult.class).getBody();
 
