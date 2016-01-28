@@ -6,21 +6,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User {
 
 	private String _id;
-	private String _name;
+	private String _pin;
 
 	@Deprecated
 	public User() {
 
 		_id = null;
-		_name = null;
+		_pin = null;
 	}
 
 	@JsonCreator
 	public User(@JsonProperty("id") final String id,
-	            @JsonProperty("name") final String name) {
+	            @JsonProperty("pin") final String pin) {
 
 		_id = id;
-		_name = name;
+		_pin = pin;
 	}
 
 	@JsonProperty("id")
@@ -35,14 +35,14 @@ public class User {
 		_id = id;
 	}
 
-	@JsonProperty("name")
-	public String getName() {
+	@JsonProperty("pin")
+	public String getPin() {
 
-		return _name;
+		return _pin;
 	}
 
-	public void setName(final String name) {
+	public void setPin(final String pin) {
 
-		_name = name;
+		_pin = pin;
 	}
 }

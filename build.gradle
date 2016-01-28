@@ -26,6 +26,8 @@ dependencies {
 	compile 'com.amazonaws:aws-java-sdk-dynamodb:1.9.40'
 
     compile 'org.springframework:spring-web:4.2.4.RELEASE'
+	compile 'javax.persistence:persistence-api:1.0.2'
+	compile 'org.postgresql:postgresql:9.4.1207'
 
 	testCompile 'junit:junit:4.4'
     testCompile 'org.mockito:mockito-core:1.+'
