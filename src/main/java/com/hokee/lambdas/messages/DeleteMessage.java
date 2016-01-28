@@ -31,7 +31,7 @@ public class DeleteMessage {
 			final String key = request.getUserId() + "/" + request.getMessageId();
 			s3.deleteObject(BUCKET, key);
 
-			logger.debug("Successfully deleted message `{}`", key);
+			logger.info("Successfully deleted message `{}`", key);
 			return DeleteMessageResult.Success();
 		} catch (AmazonClientException e) {
 			logger.error("Error deleting message", e);

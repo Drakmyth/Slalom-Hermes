@@ -40,7 +40,7 @@ public class AddMessage {
 				final String key = request.getMessage().getRecipient() + "/" + request.getMessage().getId();
 				s3.putObject(BUCKET, key, objStream, metadata);
 
-				logger.debug("Successfully uploaded message `{}`", key);
+				logger.info("Successfully uploaded message `{}`", key);
 			} catch (IOException e) {
 				logger.error("Error sending message", e);
 				return AddMessageResult.Failure(e.getMessage());

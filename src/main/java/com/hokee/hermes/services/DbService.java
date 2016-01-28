@@ -52,11 +52,11 @@ public class DbService {
 
 		ResultSet retVal = null;
 
-		logger.debug("Opening db connection");
+		logger.info("Opening db connection");
 		final Connection db = openConnection();
 		try {
 			final Statement stmt = db.createStatement();
-			logger.debug("executing sql: " + sql);
+			logger.info("executing sql: " + sql);
 			retVal = stmt.executeQuery(sql);
 		} catch (final SQLException e) {
 			logger.error("Error executing SQL statement", e);
